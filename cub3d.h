@@ -1,7 +1,5 @@
 #ifndef __CUB3D__H__
 #define __CUB3D__H__
-# define WIN_HEIGHT 768
-# define WIN_WIDTH 1360
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
@@ -11,6 +9,8 @@
 # include <mlx.h>
 # include <mlx_int.h>
 # include "./libft/libft.h"
+# define WIN_HEIGHT 768
+# define WIN_WIDTH 1360
 
 //struct to store the x y coords of an obj
 typedef struct s_coord
@@ -33,5 +33,11 @@ typedef struct s_root
 	void			*mlx_img;
 	t_game			*game;
 }				t_root;
+
+//common utils
+void	quit(char *str, int status);
+
+//init functions
+t_root	*init_root(char *str);
 
 #endif  //!__CUB3D__H__
