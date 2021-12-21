@@ -2,6 +2,30 @@
 
 //This file will store all root related functions
 
+//will init game data
+/*
+** player.x and y -> player position coordinates
+** dir_vect.x and y -> player direction vector
+** cam_plane_vect.x and y ->camera plane vector
+** other stuff will be added here also.....
+*/
+static void	init_game(t_root *root, char *path)
+{
+	root->game = (t_game *)malloc(sizeof(t_game));
+	if (!root->game)
+	{
+		destroy_root(root);
+		quit("Error: malloc() failure in root->game\n", 1);
+	}
+	root->game->player.x = 1;
+	root->game->player.y = 1;
+	root->game->dir_vect.x = -1;
+	root->game->dir_vect.y = 0;
+	root->game->cam_plane_vect.x = 0;
+	root->game->cam_plane_vect.y = 0.66; 
+	init_map(root, path);
+}
+
 //function to initialize renderer object
 static void	init_renderer(t_root *root)
 {
@@ -21,8 +45,7 @@ t_root *init_root(char *path)
 
 	res = malloc(sizeof(t_root));
 	init_renderer(res);
-	(void) path;
-	//init_game(res);
+	init_game(res, path);
 	//init_texture(res);
 	return res;
 }

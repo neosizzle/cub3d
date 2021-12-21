@@ -23,6 +23,10 @@ typedef struct s_coord
 typedef struct s_game
 {
 	char			**map;
+	t_coord			player;
+	t_coord			dir_vect;
+	t_coord			cam_plane_vect;
+
 }				t_game;
 
 //struct to store all mlx related data

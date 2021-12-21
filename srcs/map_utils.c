@@ -1,7 +1,8 @@
 #include "cub3d.h"
 
 //This file contains map-related functions
-int	process_map(char *path)
+
+void	init_map(t_root *root, char *path)
 {
 	int	fd;
 
@@ -9,8 +10,7 @@ int	process_map(char *path)
 	if (fd < 0)
 		{
 		close(fd);
-		//destroy_root(root);
-		//error("Error: invalid fd open()\n");
+		destroy_root(root);
+		quit("Error: invalid fd open()\n", 1);
 	}
-	return 1;
 }
