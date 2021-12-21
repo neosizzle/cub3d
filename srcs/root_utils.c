@@ -38,7 +38,7 @@ static void	init_renderer(t_root *root)
 		quit("Error : mlx_init() failure\n", 1);
 }
 
-//shell fucntion to call all parts of initializers
+//shell fucntion to call all parts of initializers.
 t_root *init_root(char *path)
 {
 	t_root *res;
