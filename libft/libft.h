@@ -19,7 +19,6 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_calloc(size_t nelem, size_t elsize);
 
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-int		ft_strcmp(const char *s1, const char *s2);
 int		ft_atoi(const char *nptr);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);
@@ -68,5 +67,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /**additional funcs*/
 char	*ft_strcat(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif

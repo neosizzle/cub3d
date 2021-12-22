@@ -1,5 +1,5 @@
-#ifndef __CUB3D__H__
-#define __CUB3D__H__
+#ifndef CUB3D_H
+# define CUB3D_H
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
@@ -35,13 +35,27 @@ typedef struct s_root
 	void			*mlx;
 	void			*mlx_win;
 	void			*mlx_img;
+	void			*no_texture;
+	void			*so_texture;
+	void			*we_texture;
+	void			*ea_texture;
+	int				frgb;
+	int				crgb;
 	t_game			*game;
 }				t_root;
 
 //common utils
 void	quit(char *str, int status);
+char	*get_next_line(int fd);
 
 //init functions
 t_root	*init_root(char *str);
+void	init_map(t_root *root, char *path);
 
-#endif  //!__CUB3D__H__
+//format validation and utilities
+int		validate_line(t_root *root, char **split);
+
+//free functions
+void	destroy_root(t_root *root);
+
+#endif

@@ -2,7 +2,7 @@ NAME=cub3d
 SRCS=srcs/*.c
 INC=/usr/include
 MLX_FLAGS=-Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-GCC=gcc -Wall -Wextra -Werror
+GCC=gcc -Wall -Wextra -Werror -fsanitize=address
 
 all : ${NAME}
 
