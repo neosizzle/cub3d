@@ -69,6 +69,8 @@ void	read_textures(t_root *root, int fd)
 			quit("Error : Bad config\n", 1);
 		}
 		finished_textures = check_textures(root);
+		free(line);
+		free(split);
 	}
 	
 }

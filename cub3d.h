@@ -47,6 +47,7 @@ typedef struct s_root
 //common utils
 void	quit(char *str, int status);
 char	*get_next_line(int fd);
+void	load_texture(t_root *root, void **img, char *path);
 
 //init functions
 t_root	*init_root(char *str);

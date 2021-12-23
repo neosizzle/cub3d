@@ -38,6 +38,17 @@ static void	init_renderer(t_root *root)
 		quit("Error : mlx_init() failure\n", 1);
 }
 
+//function to load xpm texture file into image pointer
+void	load_texture(t_root *root, void **img, char *path)
+{
+	int	width;
+	int	height;
+
+	*img = mlx_xpm_file_to_image(root->mlx, path, &width, &height);
+	if (!img)
+		error("Error: mlx_xpm_file_to_image() failure\n");
+}
+
 //shell fucntion to call all parts of initializers.
 t_root *init_root(char *path)
 {
