@@ -48,6 +48,7 @@ typedef struct s_root
 void	quit(char *str, int status);
 char	*get_next_line(int fd);
 void	load_texture(t_root *root, void **img, char *path);
+int		valid_cub(char *path);
 
 //init functions
 t_root	*init_root(char *str);
@@ -58,5 +59,5 @@ int		validate_line(t_root *root, char **split);
 
 //free functions
 void	destroy_root(t_root *root);
-
+void	free_split(char **split);
 #endif

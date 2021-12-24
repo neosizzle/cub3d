@@ -5,25 +5,45 @@
 */
 static int	process_textures(t_root *root, char *iden ,char **split)
 {
-	if (!ft_strcmp(iden , "NO")) 
-		load_texture(root, &(root->no_texture), split[1]);
+	char *trimmed_nl;
+
+	trimmed_nl = ft_strtrim(split[1], "\n");
+	if (!ft_strcmp(iden , "NO"))
+		load_texture(root, &(root->no_texture), trimmed_nl);
 	else if (!ft_strcmp(iden, "SO"))
-		load_texture(root, &(root->so_texture), split[1]);
+		load_texture(root, &(root->so_texture), trimmed_nl);
 	else if (!ft_strcmp(iden, "WE"))
-		load_texture(root, &(root->we_texture), split[1]);
+		load_texture(root, &(root->we_texture), trimmed_nl);
 	else if (!ft_strcmp(iden, "EA"))
-		load_texture(root, &(root->ea_texture), split[1]);
+		load_texture(root, &(root->ea_texture), trimmed_nl);
 	else
+	{
+		free(trimmed_nl);
 		return (1);
+	}
+	free(trimmed_nl);
 	return (0);
 }
 
+/*
+ Function that sets hex colors inside root vars
+*/
 static int	process_color(t_root *root, char *iden, char **split)
 {
+	char	**colors;
+	int		r;
+	int		g;
+	int		b;
+
+	colors = ft_split(split[1], ',');
+	r = ft_atoi(colors[0]);
+	g = ft_atoi(colors[1]);
+	b = ft_atoi(colors[2]);
+	free_split(colors);
 	if (!ft_strcmp(iden , "F"))
-		printf("floor color\n");
+		root->frgb = (1 << 24 | r << 16 | g << 8 | b);
 	else if (!ft_strcmp(iden, "C"))
-		printf("ceil color\n");
+		root->crgb = (1 << 24 | r << 16 | g << 8 | b);
 	else
 		return (1);
 	return (0);
@@ -48,7 +68,7 @@ int	validate_line(t_root *root, char **split)
 		!ft_strcmp(split[0] , "WE") || !ft_strcmp(split[0] , "EA"))
 		return (process_textures(root, split[0], split));
 	else if (!ft_strcmp(split[0], "F") || !ft_strcmp(split[0], "C"))
-		return printf("Color process...\n");
+		return (process_color(root, split[0], split));
 	else if (!ft_strcmp(split[0], "\n"))
 		return (0);
 

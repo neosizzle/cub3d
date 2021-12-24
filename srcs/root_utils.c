@@ -45,8 +45,24 @@ void	load_texture(t_root *root, void **img, char *path)
 	int	height;
 
 	*img = mlx_xpm_file_to_image(root->mlx, path, &width, &height);
-	if (!img)
-		error("Error: mlx_xpm_file_to_image() failure\n");
+	if (!*img)
+	{
+		destroy_root(root);
+		quit("Error: mlx_xpm_file_to_image() failure\n", 1);
+	}
+}
+
+/*
+ Initializes all root textures to 0
+*/
+static void	init_textures(t_root *root)
+{
+	root->no_texture = 0;
+	root->so_texture = 0;
+	root->ea_texture = 0;
+	root->we_texture = 0;
+	root->frgb = 0;
+	root->crgb = 0;
 }
 
 //shell fucntion to call all parts of initializers.
@@ -55,8 +71,9 @@ t_root *init_root(char *path)
 	t_root *res;
 
 	res = malloc(sizeof(t_root));
+
+	init_textures(res);
 	init_renderer(res);
 	init_game(res, path);
-	//init_texture(res);
 	return res;
 }

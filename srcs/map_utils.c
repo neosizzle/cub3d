@@ -3,26 +3,6 @@
 //This file contains map-related functions
 
 /*
-** This function checks if file path ends with .cub
-**
-** @param char *path - file path
-** @return int - 0 if OK
-*/
-static int	valid_cub(char *path)
-{
-	int	len;
-
-	len = ft_strlen(path);
-	if (!path)
-		quit("Error : invalid .cub file\n", 1);
-	if (len < 5)
-		quit("Error : invalid .cub file\n", 1);
-	if (ft_strncmp(path + len - 4, ".cub", len) != 0)
-		quit("Error : invalid .cub file\n", 1);
-	return (0);
-}
-
-/*
 ** This function will check for all textures are present before reading the map
 **
 ** @param t_root * root - root struct
@@ -37,15 +17,19 @@ static int	check_textures(t_root *root)
 }
 
 /*
- This function will specifically read the textures and data from 
- the opened fd
-
- 1. while the textures are not finished loading, keep reading
- 	1.get next line from fd
-	2. if line is null, means something is missing, exit.
-
- @param t_root * root - root struct
- @param int fd - opened file descriptor
+** This function will specifically read the textures and data from 
+** the opened fd
+**
+** 1. while the textures are not finished loading & there are still
+** 	lines, keep reading
+**	1. split string into array of strings with space delim
+**	2. validate the current read line
+**	3. check if the textures are finished loading
+**	4. free buffer and gt next line
+** 2. free line and return error if textures and not finished loading
+**
+** @param t_root * root - root struct
+** @param int fd - opened file descriptor
 */
 void	read_textures(t_root *root, int fd)
 {
@@ -54,25 +38,28 @@ void	read_textures(t_root *root, int fd)
 	char	**split;
 
 	finished_textures = 0;
-	while (!finished_textures)
+	line = get_next_line(fd);
+	while (!finished_textures && line)
 	{
-		line = get_next_line(fd);
-		if (!line)
-		{
-			destroy_root(root);
-			quit("Error : Bad config\n", 1);
-		}
 		split = ft_split(line, ' ');
 		if (validate_line(root, split))
 		{
+			free(line);
+			free_split(split);
 			destroy_root(root);
 			quit("Error : Bad config\n", 1);
 		}
 		finished_textures = check_textures(root);
 		free(line);
-		free(split);
+		free_split(split);
+		line = get_next_line(fd);
 	}
-	
+	free(line);
+	if (!finished_textures)
+	{
+		destroy_root(root);
+		quit("Error : Bad config\n", 1);
+	}
 }
 
 // void	read_map(t_root *root, int fd)
@@ -93,7 +80,7 @@ void	init_map(t_root *root, char *path)
 	{
 		close(fd);
 		destroy_root(root);
-		quit("Error: invalid fd open()\n", 1);
+		quit("Error : invalid fd open()\n", 1);
 	}
 	read_textures(root, fd);
 	//read_map(root, fd);
