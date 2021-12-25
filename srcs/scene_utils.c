@@ -16,6 +16,18 @@ static int	check_textures(t_root *root)
 	return 1;
 }
 
+static void	read_to_buff(char **buff, char **line, int fd)
+{
+	char	*temp;
+
+	temp = ft_strdup(*buff);
+	free(*buff);
+	*buff = ft_strjoin(temp, *line);
+	free(temp);
+	free(*line);
+	*line = get_next_line(fd);
+}
+
 /*
 ** This function will specifically read the textures and data from 
 ** the opened fd
@@ -47,7 +59,7 @@ void	read_textures(t_root *root, int fd)
 			free(line);
 			free_split(split);
 			destroy_root(root);
-			quit("Error : Bad config\n", 1);
+			quit("Error : Bad config, did not pass texture/color validation\n", 1);
 		}
 		finished_textures = check_textures(root);
 		free(line);
@@ -58,14 +70,41 @@ void	read_textures(t_root *root, int fd)
 	if (!finished_textures)
 	{
 		destroy_root(root);
-		quit("Error : Bad config\n", 1);
+		quit("Error : Bad config, missing some required properties\n", 1);
 	}
 }
 
-// void	read_map(t_root *root, int fd)
-// {
+/*
+ This function will read the map data from an open fd
+ and then call validation functions
+*/
+void	read_map(t_root *root, int fd)
+{
+	char	*line;
+	char	*buff;
 
-// }
+	(void) root;
+	line = get_next_line(fd);
+	while (line && !ft_strcmp(line, "\n"))
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (!line)
+	{
+		close(fd);
+		destroy_root(root);
+		quit("Error : No map found\n", 1);
+	}
+	buff = ft_bzero(0);
+	while (line)
+	{
+		read_to_buff(&buff, &line, fd);
+	}
+	root->game->map = ft_split(buff, '\n');
+	//validate call here
+	free(buff);
+}
 
 //intialize map and config
 //read textures & colors
@@ -83,5 +122,5 @@ void	init_map(t_root *root, char *path)
 		quit("Error : invalid fd open()\n", 1);
 	}
 	read_textures(root, fd);
-	//read_map(root, fd);
+	read_map(root, fd);
 }

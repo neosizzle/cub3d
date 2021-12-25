@@ -16,6 +16,14 @@ void	free_split(char **split)
 	free(copy);
 }
 
+//frees game elements
+static void free_game(t_root *root)
+{
+	if (root->game->map)
+		free_split(root->game->map);
+	free(root->game);
+}
+
 //this file contains the fcuntions for freeing memory
 void	destroy_root(t_root *root)
 {
@@ -29,6 +37,6 @@ void	destroy_root(t_root *root)
 		mlx_destroy_image(root->mlx, root->we_texture);
 	mlx_destroy_window(root->mlx, root->mlx_win);
 	free(root->mlx);
-	free(root->game);
+	free_game(root);
 	free(root);
 }
