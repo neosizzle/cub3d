@@ -21,7 +21,7 @@ void	check_f_l(t_root *root, int i, int j)
 	// printf("Checking fl..\n");
 	while (root->game->map[i][++j])
 	{
-		if (root->game->map[i][j] != '1')
+		if (root->game->map[i][j] != '1' && root->game->map[i][j] != ' ')
 		{
 			// printf(" invalid fl\n");
 			destroy_root(root);
