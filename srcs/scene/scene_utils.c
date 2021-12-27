@@ -98,11 +98,10 @@ void	read_map(t_root *root, int fd)
 	}
 	buff = ft_bzero(0);
 	while (line)
-	{
 		read_to_buff(&buff, &line, fd);
-	}
 	root->game->map = ft_split(buff, '\n');
 	//validate call here
+	validate_map(root);
 	free(buff);
 }
 

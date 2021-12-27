@@ -49,6 +49,8 @@ void	quit(char *str, int status);
 char	*get_next_line(int fd);
 void	load_texture(t_root *root, void **img, char *path);
 int		valid_cub(char *path);
+int		get_map_length(char **map);
+void	check_f_l(t_root *root, int i, int j);
 
 //init functions
 t_root	*init_root(char *str);
@@ -56,6 +58,7 @@ void	init_map(t_root *root, char *path);
 
 //format validation and utilities
 int		validate_line(t_root *root, char **split);
+void	validate_map(t_root *root);
 
 //free functions
 void	destroy_root(t_root *root);
