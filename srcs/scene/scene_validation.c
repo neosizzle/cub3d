@@ -9,13 +9,13 @@ static int	process_textures(t_root *root, char *iden ,char **split)
 
 	trimmed_nl = ft_strtrim(split[1], "\n");
 	if (!ft_strcmp(iden , "NO"))
-		load_texture(root, &(root->no_texture), trimmed_nl);
+		load_texture(root, root->no_texture, trimmed_nl);
 	else if (!ft_strcmp(iden, "SO"))
-		load_texture(root, &(root->so_texture), trimmed_nl);
+		load_texture(root, root->so_texture, trimmed_nl);
 	else if (!ft_strcmp(iden, "WE"))
-		load_texture(root, &(root->we_texture), trimmed_nl);
+		load_texture(root, root->we_texture, trimmed_nl);
 	else if (!ft_strcmp(iden, "EA"))
-		load_texture(root, &(root->ea_texture), trimmed_nl);
+		load_texture(root, root->ea_texture, trimmed_nl);
 	else
 	{
 		free(trimmed_nl);

@@ -7,6 +7,13 @@ void	quit(char *str, int status)
 	exit(status);
 }
 
+//function to free root struct then quit the program
+void	quit_root(t_root *root, char *str, int status)
+{
+	destroy_root(root);
+	quit(str, status);
+}
+
 /*
 ** This function checks if file path ends with .cub
 **

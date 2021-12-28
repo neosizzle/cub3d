@@ -15,30 +15,95 @@
 //struct to store the x y coords of an obj
 typedef struct s_coord
 {
-	int				x;
-	int				y;
+	double	x;
+	double	y;
 }				t_coord;
+
+/*
+** Struct to store custom image properties
+** 
+** img_ptr - The image pointer mlx gives when creating new image
+** data - The address adta given when calling mlx_get_img_addr
+** bits_per_pixel - The amount of bits per pixel for colouring
+** line length - is the number of bytes used to store one line of the image in memory (unused)
+** endian -  tells you wether the pixel color in the image needs to be stored in little endian or big endian (unused)
+** width - Width of image
+** height - Height of image
+*/
+typedef struct s_image
+{
+	void	*img_ptr;
+	char	*data;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}				t_image;
+
+//struct to store custom pixel properties
+typedef struct s_pixel
+{
+	int	x;
+	int	y;
+	int	color;
+}				t_pixel;
+
+//struct to store custom line properties
+typedef struct s_line
+{
+	t_pixel	*pixels;
+}				t_line;
+
+/*
+** Struct to store player related data
+**
+** pos - position coordinate
+** dir_vect - direction vector coordinate
+** cam_plane_vect - camera plane vector coordinate
+** speed - player movement speed
+** sens - player turning sensitivity
+*/
+typedef struct s_player
+{
+	t_coord	pos;
+	t_coord	dir_vect;
+	t_coord	cam_plane_vect;
+	double speed;
+	double sens;
+}	t_player;
 
 //struct to store all game related data
 typedef struct s_game
 {
 	char			**map;
-	t_coord			player;
-	t_coord			dir_vect;
-	t_coord			cam_plane_vect;
-
+	int				player_found;
+	t_player		*player;
 }				t_game;
 
-//struct to store all mlx related data
+/*
+** Struct to store all mlx related data
+**
+** mlx - mlx pointer
+** mlx_win - mlx window pointer
+** mlx_img - mlx image pointer(unused)
+** no_texture - The pointer to image struct for north texture
+** so_texture - The pointer to image struct for south texture
+** ea_texture - The pointer to image struct for east texture
+** we_texture - The pointer to image struct for west texture
+** frgb - floor color in int
+** crgb - cel color in int
+** game - pointer to game struct
+*/
 typedef struct s_root
 {
 	void			*mlx;
 	void			*mlx_win;
 	void			*mlx_img;
-	void			*no_texture;
-	void			*so_texture;
-	void			*we_texture;
-	void			*ea_texture;
+	t_image			*no_texture;
+	t_image			*so_texture;
+	t_image			*we_texture;
+	t_image			*ea_texture;
 	int				frgb;
 	int				crgb;
 	t_game			*game;
@@ -46,8 +111,9 @@ typedef struct s_root
 
 //common utils
 void	quit(char *str, int status);
+void	quit_root(t_root *root, char *str, int status);
 char	*get_next_line(int fd);
-void	load_texture(t_root *root, void **img, char *path);
+void	load_texture(t_root *root, t_image *img, char *path);
 int		valid_cub(char *path);
 int		get_map_length(char **map);
 void	check_f_l(t_root *root, int i, int j);
@@ -55,12 +121,19 @@ void	check_f_l(t_root *root, int i, int j);
 //init functions
 t_root	*init_root(char *str);
 void	init_map(t_root *root, char *path);
+void	init_player(t_root *root);
 
 //format validation and utilities
 int		validate_line(t_root *root, char **split);
 void	validate_map(t_root *root);
 
+//render and draw functions
+t_image		*generate_frame(t_root *root);
+void		put_pixel(t_image *frame, int x, int y, int color);
+void		put_frame(t_root *root, t_image *frame);
+
 //free functions
 void	destroy_root(t_root *root);
 void	free_split(char **split);
+
 #endif

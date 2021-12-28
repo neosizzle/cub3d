@@ -16,20 +16,32 @@ static void	validate_symbols(t_root *root, char *line)
 		if (line[i] != '0' && line[i] != '1' && line[i] != 'N' &&
 			line[i] != 'S' && line[i] != 'E' && line[i] != 'W' &&
 			line[i] != ' ')
-		{
-			destroy_root(root);
-			quit("Error : Invalid map symbol\n", 1);
-		}
+			quit_root(root, "Error : Invalid map symbol\n", 1);
 	}
+}
+
+static int	validate_space(char **map, int i, int j)
+{
+	if (map[i][j] != ' ') return (1);
+	if (j < (int) ft_strlen(map[i - 1]) && map[i - 1][j] == '0')
+		quit("Error : Map not closed spacecheck up\n", 1);
+	if (j < (int) ft_strlen(map[i + 1]) && map[i - 1][j] == '0')
+		quit("Error : Map not closed spacecheck down\n", 1);
+	if (map[i][j - 1] == '0')
+		quit("Error : Map not closed spacecheck left\n", 1);
+	if (map[i][j + 1] == '0')
+		quit("Error : Map not closed spacecheck right\n", 1);
+	return (0);
 }
 
 /*
 ** Function that checks for borders
 **
-** 1. Check for top row length > curr row length && curr idx > top strlen
-** 2. Check for current col top is a space
-** 3. Check for bottom row length > curr row length && curr idx > bottom strlen
-** 4. Check for current col bot is a space
+** 1. Check for spaces vicinity
+** 2. Check for top row length > curr row length && curr idx > top strlen
+** 3. Check for current col top is a space
+** 4. Check for bottom row length > curr row length && curr idx > bottom strlen
+** 5. Check for current col bot is a space
 **
 ** @param char **map - the 2d map array
 ** @param int i - the current row 
@@ -37,6 +49,7 @@ static void	validate_symbols(t_root *root, char *line)
 */
 static void	validate_borders(char **map, int i, int j)
 {
+	if (!validate_space(map, i, j)) return ;
 	if (ft_strlen(map[i]) > ft_strlen(map[i - 1]) && j >= (int)ft_strlen(map[i - 1]))
 	{
 		if (map[i][j] != '1')
@@ -57,6 +70,11 @@ static void	validate_borders(char **map, int i, int j)
 		if (map[i][j] != '1')
 			quit("Error : Map not closed multilvl R6\n", 1);
 	}
+
+}
+
+static void	validate_player(t_root *root, char **map, int i, int j)
+{
 
 }
 
@@ -102,16 +120,17 @@ void	validate_map(t_root *root)
 		//clear rest of the chars
 		//first char 1
 		if (map[i][j--] != '1')
-			quit("Error : Map leftside not closed R2\n", 1);
+			quit_root(root, "Error : Map leftside not closed R2\n", 1);
 		if (map[i][ft_strlen(map[i]) - 1] != '1')
-			quit("Error : Map right not closed R2\n", 1);
+			quit_root(root, "Error : Map right not closed R2\n", 1);
 		while (map[i][++j])
 		{
-
+			//printf("Currently processing j : %d\n", j);
 			validate_symbols(root, map[i]);
-			//add player validation
+			validate_player(root, map, i, j);
 			validate_borders(map, i, j);
 		}
 	}
-	
+	if (!root->game->player_found)
+		quit_root(root, "Error : No player found\n", 1);
 }

@@ -58,8 +58,7 @@ void	read_textures(t_root *root, int fd)
 		{
 			free(line);
 			free_split(split);
-			destroy_root(root);
-			quit("Error : Bad config, did not pass texture/color validation\n", 1);
+			quit_root(root, "Error : Bad config, did not pass texture/color validation\n", 1);
 		}
 		finished_textures = check_textures(root);
 		free(line);
@@ -68,10 +67,7 @@ void	read_textures(t_root *root, int fd)
 	}
 	free(line);
 	if (!finished_textures)
-	{
-		destroy_root(root);
-		quit("Error : Bad config, missing some required properties\n", 1);
-	}
+		quit_root(root, "Error : Bad config, missing some required properties\n", 1);
 }
 
 /*
@@ -93,8 +89,7 @@ void	read_map(t_root *root, int fd)
 	if (!line)
 	{
 		close(fd);
-		destroy_root(root);
-		quit("Error : No map found\n", 1);
+		quit_root(root, "Error : No map found\n", 1);
 	}
 	buff = ft_bzero(0);
 	while (line)
@@ -117,8 +112,7 @@ void	init_map(t_root *root, char *path)
 	if (fd < 0 || valid_cub(path))
 	{
 		close(fd);
-		destroy_root(root);
-		quit("Error : invalid fd open()\n", 1);
+		quit_root(root, "Error : invalid fd open()\n", 1);
 	}
 	read_textures(root, fd);
 	read_map(root, fd);
