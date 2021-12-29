@@ -73,9 +73,41 @@ static void	validate_borders(char **map, int i, int j)
 
 }
 
-static void	validate_player(t_root *root, char **map, int i, int j)
+static int	validate_player(t_root *root, char **map, int i, int j)
 {
+	//set direction TODO
 
+	if (map[i][j] == 'N')
+	{
+		root->game->player->dir_vect.x = 0.00;
+		root->game->player->dir_vect.y = -1.00;
+		root->game->player->cam_plane_vect.x = 0.66;
+		root->game->player->cam_plane_vect.y = 0.00;
+	}
+	else if (map[i][j] == 'S')
+	{
+		root->game->player->dir_vect.x = 0.00;
+		root->game->player->dir_vect.y = 1.00;
+		root->game->player->cam_plane_vect.x = -0.66;
+		root->game->player->cam_plane_vect.y = 0.00;
+	}
+	else if (map[i][j] == 'E')
+	{
+		root->game->player->dir_vect.x = 1.00;
+		root->game->player->dir_vect.y = 0.00;
+		root->game->player->cam_plane_vect.x = 0.00;
+		root->game->player->cam_plane_vect.y = 0.66;
+	}
+	else if (map[i][j] == 'W')
+	{
+		root->game->player->dir_vect.x = -1;
+		root->game->player->dir_vect.y = 0.00;
+		root->game->player->cam_plane_vect.x = 0.00;
+		root->game->player->cam_plane_vect.y = -0.66;
+	}
+	else
+		return (1);
+	return (0);
 }
 
 /*
@@ -127,7 +159,8 @@ void	validate_map(t_root *root)
 		{
 			//printf("Currently processing j : %d\n", j);
 			validate_symbols(root, map[i]);
-			validate_player(root, map, i, j);
+			if (validate_player(root, map, i, j))
+				root->game->player_found = 1;
 			validate_borders(map, i, j);
 		}
 	}
