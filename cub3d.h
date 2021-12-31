@@ -1,6 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <unistd.h>
+# include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <string.h>
@@ -20,13 +21,51 @@ typedef struct s_coord
 }				t_coord;
 
 /*
+ Struct to store all raycasting related variable needed for rc calculation
+
+ curr_x - current x index relative to the screen / how many pixels width
+ map_x/y - current x/y index realtaive to the map
+ cam_x - x- coordinate in camera space
+ ray_dir_x/y = Ray x/y direction vector
+ side_dist_x/y - length of ray from current position to next x or y-side
+ delta_dist_x/y - length of ray from one x or y-side to next x or y-side
+ step_x/y - The direction to step the vector in
+ hit - determines wether or not a wall has been hit
+ side - determines the side direction
+
+*/
+typedef struct s_ray
+{
+	int		curr_x;
+	int		map_x;
+	int		map_y;
+	double	cam_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	prep_wall_dist;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+}				t_ray;
+
+/*
 ** Struct to store custom image properties
 ** 
 ** img_ptr - The image pointer mlx gives when creating new image
 ** data - The address adta given when calling mlx_get_img_addr
 ** bits_per_pixel - The amount of bits per pixel for colouring
-** line length - is the number of bytes used to store one line of the image in memory (unused)
-** endian -  tells you wether the pixel color in the image needs to be stored in little endian or big endian (unused)
+** line length - is the number of bytes used to store one line of
+**				 the image in memory (unused)
+** endian -  tells you wether the pixel color in the image needs
+** 				to be stored in little endian or big endian (unused)
 ** width - Width of image
 ** height - Height of image
 */
@@ -69,8 +108,8 @@ typedef struct s_player
 	t_coord	pos;
 	t_coord	dir_vect;
 	t_coord	cam_plane_vect;
-	double speed;
-	double sens;
+	double	speed;
+	double	sens;
 }	t_player;
 
 //struct to store all game related data
@@ -99,7 +138,7 @@ typedef struct s_root
 {
 	void			*mlx;
 	void			*mlx_win;
-	void			*mlx_img;
+	t_image			*mlx_img;
 	t_image			*no_texture;
 	t_image			*so_texture;
 	t_image			*we_texture;
@@ -110,30 +149,37 @@ typedef struct s_root
 }				t_root;
 
 //common utils
-void	quit(char *str, int status);
-void	quit_root(t_root *root, char *str, int status);
-char	*get_next_line(int fd);
-void	load_texture(t_root *root, t_image *img, char *path);
-int		valid_cub(char *path);
-int		get_map_length(char **map);
-void	check_f_l(t_root *root, int i, int j);
+void		quit(char *str, int status);
+void		quit_root(t_root *root, char *str, int status);
+char		*get_next_line(int fd);
+void		load_texture(t_root *root, t_image *img, char *path);
+int			valid_cub(char *path);
+int			get_map_length(char **map);
+void		check_f_l(t_root *root, int i, int j);
 
 //init functions
-t_root	*init_root(char *str);
-void	init_map(t_root *root, char *path);
-void	init_player(t_root *root);
+t_root		*init_root(char *str);
+void		init_map(t_root *root, char *path);
+void		init_player(t_root *root);
 
 //format validation and utilities
-int		validate_line(t_root *root, char **split);
-void	validate_map(t_root *root);
+int			validate_line(t_root *root, char **split);
+void		validate_map(t_root *root);
+
+//player utilities
+void		set_camera(t_root *root, double d_y, double p_x, double p_y);
 
 //render and draw functions
 t_image		*generate_frame(t_root *root);
 void		put_pixel(t_image *frame, int x, int y, int color);
 void		put_frame(t_root *root, t_image *frame);
+int			render(void *param);
+
+//raycasting
+void	raycasting(t_root *root, t_ray *ray);
 
 //free functions
-void	destroy_root(t_root *root);
-void	free_split(char **split);
+void		destroy_root(t_root *root);
+void		free_split(char **split);
 
 #endif

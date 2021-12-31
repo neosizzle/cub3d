@@ -68,5 +68,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 /**additional funcs*/
 char	*ft_strcat(char *s1, char *s2);
 int		ft_strcmp(char *s1, char *s2);
+void	ft_bzero_inplace(void *s, size_t n);
 
 #endif

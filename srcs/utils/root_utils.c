@@ -33,6 +33,16 @@ static void	init_renderer(t_root *root)
 		= mlx_new_window(root->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
 	if (!root->mlx_win)
 		quit("Error : mlx_init() failure\n", 1);
+	root->mlx_img->img_ptr = mlx_new_image(root->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!root->mlx_img->img_ptr)
+	{
+		destroy_root(root);
+		quit("Error: mlx_new_image() failure\n", 1);
+	}
+	root->mlx_img->width = WIN_WIDTH;
+	root->mlx_img->height = WIN_HEIGHT;
+	root->mlx_img->data = mlx_get_data_addr(root->mlx_img->img_ptr, &root->mlx_img->bits_per_pixel,
+		&root->mlx_img->line_length, &root->mlx_img->endian);
 }
 
 //function to load xpm texture file into image pointer
@@ -57,6 +67,7 @@ void	load_texture(t_root *root, t_image *img, char *path)
 */
 static void	init_textures(t_root *root)
 {
+	root->mlx_img = malloc(sizeof(t_image));
 	root->no_texture = malloc(sizeof(t_image));
 	root->so_texture = malloc(sizeof(t_image));
 	root->ea_texture = malloc(sizeof(t_image));

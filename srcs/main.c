@@ -13,7 +13,7 @@ int	main(int argc, char **argv)
 		quit("Usage ./cub3d [path_to_map]\n", 1);
 	root = init_root(argv[1]);
 	mlx_hook(root->mlx_win, 17, 0, game_exit, root);
-
+	mlx_loop_hook(root->mlx, render, root);
 	/* Test shit*/
 
 	//write a line

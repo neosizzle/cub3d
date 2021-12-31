@@ -49,8 +49,10 @@ static int	validate_space(char **map, int i, int j)
 */
 static void	validate_borders(char **map, int i, int j)
 {
-	if (!validate_space(map, i, j)) return ;
-	if (ft_strlen(map[i]) > ft_strlen(map[i - 1]) && j >= (int)ft_strlen(map[i - 1]))
+	if (!validate_space(map, i, j))
+		return ;
+	if (ft_strlen(map[i]) > ft_strlen(map[i - 1])
+		&& j >= (int)ft_strlen(map[i - 1]))
 	{
 		if (map[i][j] != '1')
 			quit("Error : Map not closed multilvl R3\n", 1);
@@ -60,7 +62,8 @@ static void	validate_borders(char **map, int i, int j)
 		if (map[i][j] != '1')
 			quit("Error : Map not closed multilvl R4\n", 1);
 	}
-	if (ft_strlen(map[i]) > ft_strlen(map[i + 1]) && j >= (int)ft_strlen(map[i + 1]))
+	if (ft_strlen(map[i]) > ft_strlen(map[i + 1])
+		&& j >= (int)ft_strlen(map[i + 1]))
 	{
 		if (map[i][j] != '1')
 			quit("Error : Map not closed multilvl R5\n", 1);
@@ -70,43 +73,34 @@ static void	validate_borders(char **map, int i, int j)
 		if (map[i][j] != '1')
 			quit("Error : Map not closed multilvl R6\n", 1);
 	}
-
 }
 
 static int	validate_player(t_root *root, char **map, int i, int j)
 {
-	//set direction TODO
-
 	if (map[i][j] == 'N')
 	{
 		root->game->player->dir_vect.x = 0.00;
-		root->game->player->dir_vect.y = -1.00;
-		root->game->player->cam_plane_vect.x = 0.66;
-		root->game->player->cam_plane_vect.y = 0.00;
+		set_camera(root, -1.00, 0.66, 0.00);
 	}
 	else if (map[i][j] == 'S')
 	{
 		root->game->player->dir_vect.x = 0.00;
-		root->game->player->dir_vect.y = 1.00;
-		root->game->player->cam_plane_vect.x = -0.66;
-		root->game->player->cam_plane_vect.y = 0.00;
+		set_camera(root, 1.00, -0.66, 0.00);
 	}
 	else if (map[i][j] == 'E')
 	{
 		root->game->player->dir_vect.x = 1.00;
-		root->game->player->dir_vect.y = 0.00;
-		root->game->player->cam_plane_vect.x = 0.00;
-		root->game->player->cam_plane_vect.y = 0.66;
+		set_camera(root, 0.00, 0.00, 0.66);
 	}
 	else if (map[i][j] == 'W')
 	{
 		root->game->player->dir_vect.x = -1;
-		root->game->player->dir_vect.y = 0.00;
-		root->game->player->cam_plane_vect.x = 0.00;
-		root->game->player->cam_plane_vect.y = -0.66;
+		set_camera(root, 0.00, 0.00, -0.66);
 	}
 	else
 		return (1);
+	root->game->player->pos.x = (double) j;
+	root->game->player->pos.y = (double) i;
 	return (0);
 }
 
@@ -136,28 +130,21 @@ void	validate_map(t_root *root)
 	i = -1;
 	while (++i < len)
 	{
-		//printf("Currently processing i : %d\n", i);
 		j = -1;
-
-		//clear whitespace
-		while (map[i][++j] && map[i][j] == ' '){}
-		
-		//check for for last line
+		while (map[i][++j] && map[i][j] == ' ')
+		{
+		}
 		if (i == 0 || i == len - 1)
 		{
 			check_f_l(root, i, j);
 			continue ;
 		}
-
-		//clear rest of the chars
-		//first char 1
 		if (map[i][j--] != '1')
 			quit_root(root, "Error : Map leftside not closed R2\n", 1);
 		if (map[i][ft_strlen(map[i]) - 1] != '1')
 			quit_root(root, "Error : Map right not closed R2\n", 1);
 		while (map[i][++j])
 		{
-			//printf("Currently processing j : %d\n", j);
 			validate_symbols(root, map[i]);
 			if (validate_player(root, map, i, j))
 				root->game->player_found = 1;
