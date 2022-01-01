@@ -117,5 +117,6 @@ void	raycasting(t_root *root, t_ray *ray)
 	init_values(ray, player);
 	determine_step(ray, player);
 	perform_dda(root, ray);
+	prep_height(ray, player);
 	ray->curr_x++;
 }

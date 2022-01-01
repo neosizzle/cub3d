@@ -177,6 +177,7 @@ int			render(void *param);
 
 //raycasting
 void	raycasting(t_root *root, t_ray *ray);
+void	prep_height(t_ray *ray, t_player *player);
 
 //free functions
 void		destroy_root(t_root *root);
