@@ -99,8 +99,8 @@ static int	validate_player(t_root *root, char **map, int i, int j)
 	}
 	else
 		return (1);
-	root->game->player->pos.x = (double) j;
-	root->game->player->pos.y = (double) i;
+	root->game->player->pos.x = (double) j + 0.5;
+	root->game->player->pos.y = (double) i + 0.5;
 	return (0);
 }
 

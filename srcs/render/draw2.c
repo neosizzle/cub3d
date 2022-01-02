@@ -11,7 +11,7 @@ static void	texture_on_img(t_root *root, t_ray *ray, t_line *line, t_image *text
 		/ texture->line_length;
 	// printf("accessing data at idx %d\n",line->tex_y
 	// 	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8));
-	// printf("data accessed %c\n", texture->data[line->tex_y
+	// printf("data accessed %d\n", (int) texture->data[line->tex_y
 	// 	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)]);
 	// printf("ray->line_height %d\n",ray->line_height);
 	// printf("line->y %d\n",line->y);
@@ -24,11 +24,11 @@ static void	texture_on_img(t_root *root, t_ray *ray, t_line *line, t_image *text
 		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
 		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)];
 	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
-		* root->mlx_img->bits_per_pixel / 8 + 1] = texture->data[line->tex_y
-		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8 + 1)];
+		* (root->mlx_img->bits_per_pixel / 8) + 1] = texture->data[line->tex_y
+		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8) + 1];
 	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
-		* root->mlx_img->bits_per_pixel / 8 + 2] = texture->data[line->tex_y
-		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8 + 2)];
+		* (root->mlx_img->bits_per_pixel / 8) + 2] = texture->data[line->tex_y
+		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8 ) + 2];
 }
 
 //determines y max and min and starts drawing texture on image
