@@ -78,6 +78,7 @@ static void	init_textures(t_root *root)
 	root->we_texture->img_ptr = 0;
 	root->frgb = 0;
 	root->crgb = 0;
+	ft_bzero_inplace(root->mlx_img, sizeof(t_image));
 }
 
 //shell fucntion to call all parts of initializers.

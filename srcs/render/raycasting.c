@@ -118,5 +118,6 @@ void	raycasting(t_root *root, t_ray *ray)
 	determine_step(ray, player);
 	perform_dda(root, ray);
 	prep_height(ray, player);
+	draw_textures(root, ray, player);
 	ray->curr_x++;
 }

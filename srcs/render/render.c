@@ -18,7 +18,7 @@ int	render(void *param)
 	ft_bzero_inplace(ray, sizeof(t_ray));
 	while (ray->curr_x < WIN_WIDTH)
 		raycasting(root, ray);
-	//put img to win here
+	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img->img_ptr, 0, 0);
 	free(ray);
 	return (0);
 }

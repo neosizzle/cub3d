@@ -10,8 +10,8 @@
 # include <mlx.h>
 # include <mlx_int.h>
 # include "./libft/libft.h"
-# define WIN_HEIGHT 768
-# define WIN_WIDTH 1360
+# define WIN_HEIGHT 600
+# define WIN_WIDTH 900
 
 //struct to store the x y coords of an obj
 typedef struct s_coord
@@ -21,18 +21,20 @@ typedef struct s_coord
 }				t_coord;
 
 /*
- Struct to store all raycasting related variable needed for rc calculation
-
- curr_x - current x index relative to the screen / how many pixels width
- map_x/y - current x/y index realtaive to the map
- cam_x - x- coordinate in camera space
- ray_dir_x/y = Ray x/y direction vector
- side_dist_x/y - length of ray from current position to next x or y-side
- delta_dist_x/y - length of ray from one x or y-side to next x or y-side
- step_x/y - The direction to step the vector in
- hit - determines wether or not a wall has been hit
- side - determines the side direction
-
+** Struct to store all raycasting related variable needed for rc calculation
+**
+** curr_x - current x index relative to the screen / how many pixels width
+** map_x/y - current x/y index realtaive to the map
+** cam_x - x- coordinate in camera space
+** ray_dir_x/y = Ray x/y direction vector
+** side_dist_x/y - length of ray from current position to next x or y-side
+** delta_dist_x/y - length of ray from one x or y-side to next x or y-side
+** step_x/y - The direction to step the vector in
+** hit - determines wether or not a wall has been hit
+** side - determines the side direction
+** line_height - the height of texture to draw
+** draw_start - the index of initial draw value
+** draw_end - the index of end draw value
 */
 typedef struct s_ray
 {
@@ -80,18 +82,24 @@ typedef struct s_image
 	int		height;
 }				t_image;
 
-//struct to store custom pixel properties
-typedef struct s_pixel
+/*
+** Struct to store line properties to draw on screen
+**
+** x - the x coordinate of lien relative to screen
+** y - the current pixel index of the line 
+** y0 - y start index of drawing
+** y1 - y end index of drawing
+** tex_x - x coordinate of texture to draw
+** tex_y - y coordinate of texture to draw
+*/
+typedef struct s_line
 {
 	int	x;
 	int	y;
-	int	color;
-}				t_pixel;
-
-//struct to store custom line properties
-typedef struct s_line
-{
-	t_pixel	*pixels;
+	int	y0;
+	int	y1;
+	int	tex_x;
+	int	tex_y;
 }				t_line;
 
 /*
@@ -174,6 +182,8 @@ t_image		*generate_frame(t_root *root);
 void		put_pixel(t_image *frame, int x, int y, int color);
 void		put_frame(t_root *root, t_image *frame);
 int			render(void *param);
+void		draw_textures(t_root *root, t_ray *ray, t_player *player);
+void		draw_texture_image(t_root *root, t_ray *ray, t_line *line, t_image *img);
 
 //raycasting
 void	raycasting(t_root *root, t_ray *ray);
