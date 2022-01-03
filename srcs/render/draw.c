@@ -42,11 +42,11 @@ void	draw_textures(t_root *root, t_ray *ray, t_player *player)
 	line->x = ray->curr_x;
 	if (root->game->map[ray->map_y][ray->map_x] == '1')
 		paint_texture_line(root, ray, line, wall_x);
-	// line->y0 = 0;
-	// line->y1 = ray->draw_start;
-	// paint_line(root, line, root->crgb);
-	// line->y0 = WIN_HEIGHT;
-	// line->y1 = ray->draw_end;
-	// paint_line(root, line, root->frgb);
+	line->y0 = 0;
+	line->y1 = ray->draw_start;
+	paint_line(root, line, root->crgb);
+	line->y0 = WIN_HEIGHT;
+	line->y1 = ray->draw_end;
+	paint_line(root, line, root->frgb);
 	free(line);
 }

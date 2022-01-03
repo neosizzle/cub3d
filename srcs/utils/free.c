@@ -27,14 +27,17 @@ static void free_game(t_root *root)
 }
 
 //this frees the img ptr inside img struct and frees the struct itself
+// if (img->data && img->img_ptr)
+// 	mlx_destroy_image(root->mlx, img->img_ptr); (will segfault)
 static void	destroy_image(t_root *root, t_image *img)
 {
-	if (img->img_ptr)
+	if (img->data && img->img_ptr)
 		mlx_destroy_image(root->mlx, img->img_ptr);
+	(void) root;
 	free(img);
 }
 
-//this file contains the fcuntions for freeing memory
+//frees a root struct
 void	destroy_root(t_root *root)
 {
 	if (root->no_texture)
@@ -45,6 +48,8 @@ void	destroy_root(t_root *root)
 		destroy_image(root->mlx, root->ea_texture);
 	if (root->we_texture)
 		destroy_image(root->mlx, root->we_texture);
+	if (root->mlx_img)
+		destroy_image(root->mlx, root->mlx_img);
 	mlx_destroy_window(root->mlx, root->mlx_win);
 	free(root->mlx);
 	free_game(root);

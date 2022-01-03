@@ -1,9 +1,9 @@
-F 220,100,0
-NO ./textures/wall.xpm
+F 173,164,140
+NO ./textures/wall2.xpm
 SO ./textures/wall2.xpm
-WE ./textures/wall3.xpm
-EA ./textures/wall3.xpm
-C 225,30,0 
+WE ./textures/wall.xpm
+EA ./textures/wall2.xpm
+F 225,30,0 
 
         111111
         100001

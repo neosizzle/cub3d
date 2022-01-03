@@ -23,7 +23,16 @@ static void	init_game(t_root *root, char *path)
 	init_map(root, path);
 }
 
-//function to initialize renderer object
+/*
+** Function that initializes renderer requried objects
+**
+** 1. Initializes mlxinit()
+** 2. Initializes mlx_new_window()
+** 3. Initializes mlx_img (our main frames)
+** 4. Set mlx_img metadata
+**
+** @param t_root *root - The root struct
+*/
 static void	init_renderer(t_root *root)
 {
 	root->mlx = mlx_init();
@@ -35,17 +44,23 @@ static void	init_renderer(t_root *root)
 		quit("Error : mlx_init() failure\n", 1);
 	root->mlx_img->img_ptr = mlx_new_image(root->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!root->mlx_img->img_ptr)
-	{
-		destroy_root(root);
-		quit("Error: mlx_new_image() failure\n", 1);
-	}
+		quit_root(root, "Error: mlx_new_image() failure\n", 1);
 	root->mlx_img->width = WIN_WIDTH;
 	root->mlx_img->height = WIN_HEIGHT;
 	root->mlx_img->data = mlx_get_data_addr(root->mlx_img->img_ptr, &root->mlx_img->bits_per_pixel,
 		&root->mlx_img->line_length, &root->mlx_img->endian);
 }
 
-//function to load xpm texture file into image pointer
+/*
+** Function that laods xpm texture file into image pointer
+**
+** 1. Call mlx_xpm_file_to_image() to obtain image pointer
+** 2. Set image metadata to the rest of the struct
+**
+** @param t_root *root - The root struct
+** @param t_img *img - The image object to be initialized
+** @param char *path - The file path to the xpm file
+*/
 void	load_texture(t_root *root, t_image *img, char *path)
 {
 	int	width;
@@ -53,17 +68,14 @@ void	load_texture(t_root *root, t_image *img, char *path)
 
 	img->img_ptr = mlx_xpm_file_to_image(root->mlx, path, &width, &height);
 	if (!img->img_ptr)
-	{
-		destroy_root(root);
-		quit("Error: mlx_xpm_file_to_image() failure\n", 1);
-	}
+		quit_root(root, "Error: mlx_xpm_file_to_image() failure\n", 1);
 	img->width = width;
 	img->height = height;
 	img->data = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
 }
 
 /*
- Initializes all root textures to 0
+** Initializes all root textores to 0
 */
 static void	init_textures(t_root *root)
 {
@@ -72,16 +84,25 @@ static void	init_textures(t_root *root)
 	root->so_texture = malloc(sizeof(t_image));
 	root->ea_texture = malloc(sizeof(t_image));
 	root->we_texture = malloc(sizeof(t_image));
-	root->no_texture->img_ptr = 0;
-	root->so_texture->img_ptr = 0;
-	root->ea_texture->img_ptr = 0;
-	root->we_texture->img_ptr = 0;
 	root->frgb = 0;
 	root->crgb = 0;
 	ft_bzero_inplace(root->mlx_img, sizeof(t_image));
+	ft_bzero_inplace(root->no_texture, sizeof(t_image));
+	ft_bzero_inplace(root->so_texture, sizeof(t_image));
+	ft_bzero_inplace(root->ea_texture, sizeof(t_image));
+	ft_bzero_inplace(root->we_texture, sizeof(t_image));
 }
 
-//shell fucntion to call all parts of initializers.
+/*
+** Function to call seperate initializers
+**
+** 1. Initialize root textures
+** 2. Initialize renderer data
+** 3. Initialize game data
+**
+** @param char *path - The file path to the .cub file
+** @return t_root *root - the root struct
+*/
 t_root *init_root(char *path)
 {
 	t_root *res;

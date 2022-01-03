@@ -23,9 +23,6 @@ void	check_f_l(t_root *root, int i, int j)
 	while (root->game->map[i][++j])
 	{
 		if (root->game->map[i][j] != '1' && root->game->map[i][j] != ' ')
-		{
-			destroy_root(root);
-			quit("Error : Map not closed border R1\n", 1);
-		}
+			quit_root(root, "Error : Map not closed border R1\n", 1);
 	}
 }

@@ -18,7 +18,7 @@ clean :
 	make -C libft clean
 
 fclean : 
-	rm -f *.o libft/*.o ${NAME}
+	rm -f *.o libft/*.o ${NAME} *.out
 	make -C libft fclean
 
 re : fclean all

@@ -10,8 +10,8 @@
 */
 static int	check_textures(t_root *root)
 {
-	if (!root->no_texture || !root->so_texture || !root->we_texture ||
-		!root->ea_texture || !root->frgb || !root->crgb)
+	if (!root->no_texture->img_ptr || !root->so_texture->img_ptr || !root->we_texture->img_ptr ||
+		!root->ea_texture->img_ptr || !root->frgb || !root->crgb)
 		return 0;
 	return 1;
 }
@@ -79,7 +79,6 @@ void	read_map(t_root *root, int fd)
 	char	*line;
 	char	*buff;
 
-	(void) root;
 	line = get_next_line(fd);
 	while (line && !ft_strcmp(line, "\n"))
 	{
@@ -95,7 +94,6 @@ void	read_map(t_root *root, int fd)
 	while (line)
 		read_to_buff(&buff, &line, fd);
 	root->game->map = ft_split(buff, '\n');
-	//validate call here
 	validate_map(root);
 	free(buff);
 }

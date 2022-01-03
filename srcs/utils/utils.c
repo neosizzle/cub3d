@@ -8,9 +8,10 @@ void	quit(char *str, int status)
 }
 
 //function to free root struct then quit the program
+// apparently i dont need to destroy_root(root); ???
 void	quit_root(t_root *root, char *str, int status)
 {
-	destroy_root(root);
+	(void) root;
 	quit(str, status);
 }
 

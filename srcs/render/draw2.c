@@ -31,6 +31,21 @@ static void	texture_on_img(t_root *root, t_ray *ray, t_line *line, t_image *text
 		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8 ) + 2];
 }
 
+static void	pixel_on_img(int rgb, int x, int y, t_image *img)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = (rgb >> 16) & 0xFF;
+	g = (rgb >> 8) & 0xFF;
+	b = rgb & 0xFF;
+
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8] = r;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 1] = g;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 2] = b;
+}
+
 //determines y max and min and starts drawing texture on image
 void	draw_texture_image(t_root *root, t_ray *ray, t_line *line, t_image *img)
 {
@@ -51,5 +66,30 @@ void	draw_texture_image(t_root *root, t_ray *ray, t_line *line, t_image *img)
 		line->y--;
 		while (++line->y < y_max)
 			texture_on_img(root, ray, line, img);
+	}
+}
+
+void	paint_line(t_root *root, t_line *line, int rgb)
+{
+	int	y;
+	int	y_max;
+
+	if (line->y0 < line->y1)
+	{
+		y = line->y0;
+		y_max = line->y1;
+	}
+	else
+	{
+		y = line->y1;
+		y_max = line->y0;
+	}
+	if (y >= 0)
+	{
+		while (y < y_max)
+		{
+			pixel_on_img(rgb, line->x, y, root->mlx_img);
+			y++;
+		}
 	}
 }

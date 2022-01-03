@@ -20,9 +20,19 @@ static void	validate_symbols(t_root *root, char *line)
 	}
 }
 
+/*
+** Function that checks for borders around spacews
+**
+** 1. When a space is encoutnered. all neighbout units must either be 1 or ' '
+**
+** @param char **map - the 2d map array
+** @param int i - the current row 
+** @param int j - the current column
+** @return int status - 0 if ok, 1 if not a space
+*/
 static int	validate_space(char **map, int i, int j)
 {
-	if (map[i][j] != ' ') return (1);
+	if (map[i][j] != ' ') return (0);
 	if (j < (int) ft_strlen(map[i - 1]) && map[i - 1][j] == '0')
 		quit("Error : Map not closed spacecheck up\n", 1);
 	if (j < (int) ft_strlen(map[i + 1]) && map[i - 1][j] == '0')
@@ -31,7 +41,7 @@ static int	validate_space(char **map, int i, int j)
 		quit("Error : Map not closed spacecheck left\n", 1);
 	if (map[i][j + 1] == '0')
 		quit("Error : Map not closed spacecheck right\n", 1);
-	return (0);
+	return (1);
 }
 
 /*
@@ -49,7 +59,7 @@ static int	validate_space(char **map, int i, int j)
 */
 static void	validate_borders(char **map, int i, int j)
 {
-	if (!validate_space(map, i, j))
+	if (validate_space(map, i, j))
 		return ;
 	if (ft_strlen(map[i]) > ft_strlen(map[i - 1])
 		&& j >= (int)ft_strlen(map[i - 1]))
@@ -105,7 +115,7 @@ static int	validate_player(t_root *root, char **map, int i, int j)
 }
 
 /*
-** Function that takes a roto struct and validates a map.
+** Function that takes a root struct and validates a map.
 ** Parses the map line by line.
 ** Exits if an invalid map is found
 **
@@ -146,8 +156,7 @@ void	validate_map(t_root *root)
 		while (map[i][++j])
 		{
 			validate_symbols(root, map[i]);
-			if (validate_player(root, map, i, j))
-				root->game->player_found = 1;
+			validate_player(root, map, i, j);
 			validate_borders(map, i, j);
 		}
 	}

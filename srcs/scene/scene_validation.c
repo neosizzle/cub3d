@@ -71,6 +71,5 @@ int	validate_line(t_root *root, char **split)
 		return (process_color(root, split[0], split));
 	else if (!ft_strcmp(split[0], "\n"))
 		return (0);
-
 	return (1);
 }

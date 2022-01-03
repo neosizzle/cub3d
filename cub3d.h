@@ -10,8 +10,8 @@
 # include <mlx.h>
 # include <mlx_int.h>
 # include "./libft/libft.h"
-# define WIN_HEIGHT 600
-# define WIN_WIDTH 900
+# define WIN_HEIGHT 400
+# define WIN_WIDTH 800
 
 //struct to store the x y coords of an obj
 typedef struct s_coord
@@ -184,6 +184,7 @@ void		put_frame(t_root *root, t_image *frame);
 int			render(void *param);
 void		draw_textures(t_root *root, t_ray *ray, t_player *player);
 void		draw_texture_image(t_root *root, t_ray *ray, t_line *line, t_image *img);
+void		paint_line(t_root *root, t_line *line, int rgb);
 
 //raycasting
 void	raycasting(t_root *root, t_ray *ray);
