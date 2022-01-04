@@ -61,3 +61,33 @@ void	turn_right(t_root *root)
 	root->game->player->cam_plane_vect.y = og_planex * sin(sens)
 			+ root->game->player->cam_plane_vect.y * cos(sens);
 }
+
+/*
+ Funtion to move forward
+*/
+void	move_forward(t_root *root)
+{
+	t_player	*player;
+	t_game		*game;
+
+	game = root->game;
+	player = root->game->player;
+
+	printf("y fwd elem : %c\n", game->map
+	[(int) ((player->pos.y + player->dir_vect.y * ceil(player->speed)))]
+	[(int) (player->pos.x)]);
+
+	printf("x fwd elem : %c\n", game->map
+	[(int) (player->pos.y)]
+	[(int) (player->pos.x + player->dir_vect.x * ceil(player->speed))]);
+
+	if (game->map
+	[(int) (player->pos.y)]
+	[(int) (player->pos.x + player->dir_vect.x * ceil(player->speed))] != '1')
+		player->pos.x += (player->speed * player->dir_vect.x);
+
+	if (game->map
+	[(int) ((player->pos.y + player->dir_vect.y * ceil(player->speed)))]
+	[(int) (player->pos.x)] != '1')
+		player->pos.y += (player->speed * player->dir_vect.y);
+}

@@ -1,12 +1,12 @@
 F 173,164,140
-NO ./textures/wall2.xpm
-SO ./textures/wall2.xpm
-WE ./textures/wall.xpm
-EA ./textures/wall2.xpm
-F 225,30,0 
+NO ./textures/amongus.xpm
+SO ./textures/amongus.xpm
+WE ./textures/amongus.xpm
+EA ./textures/amongus.xpm
+C 225,30,0 
 
         111111
-        100001
+        10S001
         100001
         100001
         100001

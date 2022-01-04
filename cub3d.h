@@ -202,6 +202,7 @@ void		validate_map(t_root *root);
 void		set_camera(t_root *root, double d_y, double p_x, double p_y);
 void		turn_left(t_root *root);
 void		turn_right(t_root *root);
+void		move_forward(t_root *root);
 
 //render and draw functions
 t_image		*generate_frame(t_root *root);

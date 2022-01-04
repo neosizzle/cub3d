@@ -9,4 +9,6 @@ void	event_executor(t_root *root)
 		turn_left(root);
 	if (root->control->look_right)
 		turn_right(root);
+	if (root->control->move_fwd)
+		move_forward(root);
 }
