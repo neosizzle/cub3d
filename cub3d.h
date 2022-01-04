@@ -12,6 +12,15 @@
 # include "./libft/libft.h"
 # define WIN_HEIGHT 400
 # define WIN_WIDTH 800
+# define ESCAPE_KEY 65307
+# define UP_KEY 65362
+# define DOWN_KEY 65364
+# define RIGHT_KEY 65363
+# define LEFT_KEY 65361
+# define W_KEY 119
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
 
 //struct to store the x y coords of an obj
 typedef struct s_coord
@@ -129,6 +138,19 @@ typedef struct s_game
 }				t_game;
 
 /*
+ Struct to store all player control related data
+*/
+typedef struct s_control
+{
+	int	look_left;
+	int	look_right;
+	int	move_left;
+	int	move_right;
+	int	move_fwd;
+	int	move_bwd;
+}				t_control;
+
+/*
 ** Struct to store all mlx related data
 **
 ** mlx - mlx pointer
@@ -154,6 +176,7 @@ typedef struct s_root
 	int				frgb;
 	int				crgb;
 	t_game			*game;
+	t_control		*control;
 }				t_root;
 
 //common utils
@@ -169,6 +192,7 @@ void		check_f_l(t_root *root, int i, int j);
 t_root		*init_root(char *str);
 void		init_map(t_root *root, char *path);
 void		init_player(t_root *root);
+void		init_controls(t_root *root);
 
 //format validation and utilities
 int			validate_line(t_root *root, char **split);
@@ -176,6 +200,8 @@ void		validate_map(t_root *root);
 
 //player utilities
 void		set_camera(t_root *root, double d_y, double p_x, double p_y);
+void		turn_left(t_root *root);
+void		turn_right(t_root *root);
 
 //render and draw functions
 t_image		*generate_frame(t_root *root);
@@ -189,6 +215,11 @@ void		paint_line(t_root *root, t_line *line, int rgb);
 //raycasting
 void	raycasting(t_root *root, t_ray *ray);
 void	prep_height(t_ray *ray, t_player *player);
+
+//event / key handling
+int		handle_key_press(int key, t_root *root);
+int		handle_key_release(int key, t_root *root);
+void	event_executor(t_root *root);
 
 //free functions
 void		destroy_root(t_root *root);

@@ -7,6 +7,7 @@
 ** 2. start raycasting process
 ** 3. put image to window
 ** 4. free ray struct
+** 5. listen for events
 */
 int	render(void *param)
 {
@@ -20,5 +21,6 @@ int	render(void *param)
 		raycasting(root, ray);
 	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img->img_ptr, 0, 0);
 	free(ray);
+	event_executor(root);
 	return (0);
 }

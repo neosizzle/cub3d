@@ -112,5 +112,6 @@ t_root *init_root(char *path)
 	init_textures(res);
 	init_renderer(res);
 	init_game(res, path);
+	init_controls(res);
 	return res;
 }
