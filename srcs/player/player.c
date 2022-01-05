@@ -73,14 +73,6 @@ void	move_forward(t_root *root)
 	game = root->game;
 	player = root->game->player;
 
-	printf("y fwd elem : %c\n", game->map
-	[(int) ((player->pos.y + player->dir_vect.y * ceil(player->speed)))]
-	[(int) (player->pos.x)]);
-
-	printf("x fwd elem : %c\n", game->map
-	[(int) (player->pos.y)]
-	[(int) (player->pos.x + player->dir_vect.x * ceil(player->speed))]);
-
 	if (game->map
 	[(int) (player->pos.y)]
 	[(int) (player->pos.x + player->dir_vect.x * ceil(player->speed))] != '1')

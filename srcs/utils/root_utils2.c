@@ -12,7 +12,7 @@ void	init_player(t_root *root)
 	root->game->player->pos.x = 5;
 	root->game->player->pos.y = 5;
 	root->game->player->sens = 0.05;
-	root->game->player->speed = 0.10;
+	root->game->player->speed = 0.05;
 }
 
 void	init_controls(t_root *root)

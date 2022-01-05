@@ -11,4 +11,10 @@ void	event_executor(t_root *root)
 		turn_right(root);
 	if (root->control->move_fwd)
 		move_forward(root);
+	if (root->control->move_bwd)
+		move_backward(root);
+	if (root->control->move_left)
+		move_left(root);
+	if (root->control->move_right)
+		move_right(root);
 }
