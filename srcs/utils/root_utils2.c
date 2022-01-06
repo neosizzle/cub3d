@@ -13,6 +13,7 @@ void	init_player(t_root *root)
 	root->game->player->pos.y = 5;
 	root->game->player->sens = 0.05;
 	root->game->player->speed = 0.05;
+	root->game->player->cam_height = 1.0;
 }
 
 void	init_controls(t_root *root)
@@ -22,6 +23,8 @@ void	init_controls(t_root *root)
 		quit_root(root, "Error: malloc() failure in root->control\n", 1);
 	root->control->look_left = 0;
 	root->control->look_right = 0;
+	root->control->look_up = 0;
+	root->control->look_down = 0;
 	root->control->move_left = 0;
 	root->control->move_right = 0;
 	root->control->move_fwd = 0;

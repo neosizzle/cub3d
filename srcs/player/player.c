@@ -63,23 +63,29 @@ void	turn_right(t_root *root)
 }
 
 /*
- Funtion to move forward
+ Function to look up
 */
-void	move_forward(t_root *root)
+void	look_up(t_root *root)
 {
-	t_player	*player;
-	t_game		*game;
+	double	*cam_height;
+	double	sens;
 
-	game = root->game;
-	player = root->game->player;
+	cam_height = &(root->game->player->cam_height);
+	sens = root->game->player->sens;
+	if (*cam_height < 2)
+		*cam_height += (sens);
+}
 
-	if (game->map
-	[(int) (player->pos.y)]
-	[(int) (player->pos.x + player->dir_vect.x * ceil(player->speed))] != '1')
-		player->pos.x += (player->speed * player->dir_vect.x);
+/*
+ Function to look down
+*/
+void	look_down(t_root *root)
+{
+	double	*cam_height;
+	double	sens;
 
-	if (game->map
-	[(int) ((player->pos.y + player->dir_vect.y * ceil(player->speed)))]
-	[(int) (player->pos.x)] != '1')
-		player->pos.y += (player->speed * player->dir_vect.y);
+	cam_height = &(root->game->player->cam_height);
+	sens = root->game->player->sens;
+	if (*cam_height > 0)
+		*cam_height -= (sens);
 }

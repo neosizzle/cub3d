@@ -125,6 +125,7 @@ typedef struct s_player
 	t_coord	pos;
 	t_coord	dir_vect;
 	t_coord	cam_plane_vect;
+	double	cam_height;
 	double	speed;
 	double	sens;
 }	t_player;
@@ -144,6 +145,8 @@ typedef struct s_control
 {
 	int	look_left;
 	int	look_right;
+	int	look_up;
+	int	look_down;
 	int	move_left;
 	int	move_right;
 	int	move_fwd;
@@ -202,6 +205,8 @@ void		validate_map(t_root *root);
 void		set_camera(t_root *root, double d_y, double p_x, double p_y);
 void		turn_left(t_root *root);
 void		turn_right(t_root *root);
+void		look_up(t_root *root);
+void		look_down(t_root *root);
 void		move_forward(t_root *root);
 void		move_backward(t_root *root);
 void		move_left(t_root *root);

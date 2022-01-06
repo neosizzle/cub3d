@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
 /*
-** Function that determines perpendiculat distance and sets line draw start and end
+** Function that determines perpendicular distance and sets line draw start and end
 **
 ** 1. obtain the distance between the intersect point and the perpendicular wall / camera
 ** 2. obtain line height based on screen height
@@ -19,10 +19,10 @@ void	prep_height(t_ray *ray, t_player *player)
 	else
 		ray->prep_wall_dist = ((double) ray->map_y - player->pos.y + (1 - ray->step_y) / 2) / ray->ray_dir_y;
 	ray->line_height = WIN_HEIGHT / ray->prep_wall_dist;
-	ray->draw_start = -ray->line_height / 2 + WIN_HEIGHT / 2;// add cam height?
+	ray->draw_start = -ray->line_height / 2 + ((WIN_HEIGHT / 2) * player->cam_height);
 	if (ray->draw_start <= 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_height / 2 + WIN_HEIGHT / 2;// add cam height?
+	ray->draw_end = ray->line_height / 2 + ((WIN_HEIGHT / 2) * player->cam_height);
 	if (ray->draw_end >= WIN_HEIGHT)
 		ray->draw_end = WIN_HEIGHT - 1;
 }

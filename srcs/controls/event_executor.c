@@ -9,6 +9,10 @@ void	event_executor(t_root *root)
 		turn_left(root);
 	if (root->control->look_right)
 		turn_right(root);
+	if (root->control->look_up)
+		look_up(root);
+	if (root->control->look_down)
+		look_down(root);
 	if (root->control->move_fwd)
 		move_forward(root);
 	if (root->control->move_bwd)

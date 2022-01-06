@@ -18,5 +18,9 @@ int	handle_key_release(int key, t_root *root)
 		root->control->move_left = 0;
 	if (key == D_KEY)
 		root->control->move_right = 0;
+	if (key == UP_KEY)
+		root->control->look_up = 0;
+	if (key == DOWN_KEY)
+		root->control->look_down = 0;
 	return (0);
 }

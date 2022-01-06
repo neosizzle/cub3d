@@ -2,8 +2,9 @@ NAME=cub3d
 SRCS=srcs/*.c srcs/utils/*.c srcs/scene/*.c srcs/render/*.c srcs/player/*.c srcs/controls/*.c 
 INC=/usr/include
 MLX_FLAGS=-Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-GCC=gcc -Wall -Wextra -Werror -fsanitize=address -g3
-
+GCC=gcc -Wall -Wextra -Werror -g3
+#GCC=gcc -Wall -Wextra -Werror -fsanitize=address -g3 THIS WILL EXPOSE THE SEGFAULT CREATED BY USER SPAMMING
+ 
 all : ${NAME}
 
 $(NAME): ${SRCS}

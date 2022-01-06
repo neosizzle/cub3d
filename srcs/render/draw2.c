@@ -1,16 +1,20 @@
 #include "cub3d.h"
 
 //obtain scale and change data value according to texture on scale 
+//bug for bonus : segfaul when player spams up down key to look around
 static void	texture_on_img(t_root *root, t_ray *ray, t_line *line, t_image *texture)
 {
 	int	scale;
 
-	scale = line->y * texture->line_length  - (WIN_HEIGHT) * texture->line_length
-			/ 2 + ray->line_height * texture->line_length / 2; // add cam height?
+	scale = line->y * texture->line_length  - (WIN_HEIGHT * root->game->player->cam_height) * texture->line_length
+			/ 2 + ray->line_height * texture->line_length / 2;
 	line->tex_y = ((scale * texture->height) / ray->line_height)
 		/ texture->line_length;
-	// printf("accessing data at idx %d\n",line->tex_y
+	// printf("WIN_HEIGHT * root->game->player->cam_height %f\n", WIN_HEIGHT * root->game->player->cam_height);
+	// printf("accessing texture data at idx %d\n",line->tex_y
 	// 	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8));
+	// printf("accessing img data at idx %d\n", line->y * root->mlx_img->line_length + line->x
+	// 	* root->mlx_img->bits_per_pixel / 8);
 	// printf("data accessed %d\n", (int) texture->data[line->tex_y
 	// 	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)]);
 	// printf("ray->line_height %d\n",ray->line_height);

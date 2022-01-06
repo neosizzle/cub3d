@@ -20,6 +20,10 @@ int	handle_key_press(int key, t_root *root)
 		root->control->move_left = 1;
 	if (key == D_KEY)
 		root->control->move_right = 1;
+	if (key == UP_KEY)
+		root->control->look_up = 1;
+	if (key == DOWN_KEY)
+		root->control->look_down = 1;
 	return (0);
 }
 
