@@ -8,7 +8,6 @@
 # include <errno.h>
 # include <stdio.h>
 # include <mlx.h>
-# include <mlx_int.h>
 # include "./libft/libft.h"
 # define WIN_HEIGHT 400
 # define WIN_WIDTH 800
