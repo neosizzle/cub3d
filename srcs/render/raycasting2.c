@@ -14,7 +14,7 @@
 */
 void	prep_height(t_ray *ray, t_player *player)
 {
-	if (ray->side == 0 || ray->side == 1)
+	if (ray->side == WEST || ray->side == EAST)
 		ray->prep_wall_dist = ((double) ray->map_x - player->pos.x + (1 - ray->step_x) / 2) / ray->ray_dir_x;
 	else
 		ray->prep_wall_dist = ((double) ray->map_y - player->pos.y + (1 - ray->step_y) / 2) / ray->ray_dir_y;

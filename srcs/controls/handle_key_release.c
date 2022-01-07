@@ -1,11 +1,15 @@
 #include "cub3d.h"
 
 /*
- Sets control struct accordingly to key releases
+** Sets control struct accordingly to key releases
+**
+** @param int key - The key described as integer
+** @param t_root *root - The root struct
+** @return int status
 */
 int	handle_key_release(int key, t_root *root)
 {
-	printf("key released %d\n", key);
+	// printf("key released %d\n", key);
 	if (key == LEFT_KEY)
 		root->control->look_left = 0;
 	if (key == RIGHT_KEY)

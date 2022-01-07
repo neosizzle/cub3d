@@ -1,7 +1,9 @@
 #include "cub3d.h"
 
 /*
- Executs evenents based on control struct
+** Executs evenents based on control struct
+**
+** @param t_root *root - The root struct
 */
 void	event_executor(t_root *root)
 {

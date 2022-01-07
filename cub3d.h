@@ -21,6 +21,10 @@
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
+# define NORTH 1
+# define SOUTH 2
+# define EAST 3
+# define WEST 4
 
 //struct to store the x y coords of an obj
 typedef struct s_coord

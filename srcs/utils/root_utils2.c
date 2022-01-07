@@ -11,7 +11,7 @@ void	init_player(t_root *root)
 	root->game->player->cam_plane_vect.y = 0;
 	root->game->player->pos.x = 5;
 	root->game->player->pos.y = 5;
-	root->game->player->sens = 0.05;
+	root->game->player->sens = 0.1;
 	root->game->player->speed = 0.05;
 	root->game->player->cam_height = 1.0;
 }

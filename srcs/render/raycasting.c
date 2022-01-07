@@ -70,18 +70,18 @@ static void	get_next_wallface(t_ray *ray)
 		ray->side_dist_x += ray->delta_dist_x;
 		ray->map_x += ray->step_x;
 		if (ray->step_x == -1)
-			ray->side = 1;
+			ray->side = EAST;
 		else
-			ray->side = 0;
+			ray->side = WEST;
 	}
 	else
 	{
 		ray->side_dist_y += ray->delta_dist_y;
 		ray->map_y += ray->step_y;
 		if (ray->step_y == -1)
-			ray->side = 3;
+			ray->side = SOUTH;
 		else
-			ray->side = 2;		
+			ray->side = NORTH;		
 	}
 }
 
@@ -107,7 +107,17 @@ static void	perform_dda(t_root *root, t_ray *ray)
 }
 
 /*
- Main raycasting function
+** Main raycasting function
+** acts as a shell fucntion to call other subfunctions
+**
+** 1. Initializes ray object with player
+** 2. Determine the step size of the ray
+** 3. Perform DDA of raycasting until it hits a wall
+** 4. Calculate the distance and obtain the height of wall
+** 5. Draw the textures on the image
+**
+** @param t_root *root - The root struct
+** @param t_ray *ray - The ray struct
 */
 void	raycasting(t_root *root, t_ray *ray)
 {

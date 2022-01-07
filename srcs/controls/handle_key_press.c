@@ -1,11 +1,14 @@
 #include "cub3d.h"
 
 /*
- Sets control struct accordingly to key presses
+** Sets control struct accordingly to key presses
+**
+** @param int key - The key described as integer
+** @param t_root *root - The root struct
+** @return int status
 */
 int	handle_key_press(int key, t_root *root)
 {
-	printf("key pressed %d\n", key);
 	if (key == ESCAPE_KEY)
 		quit("Game exit\n",0);
 	if (key == LEFT_KEY)

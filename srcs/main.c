@@ -1,10 +1,24 @@
 #include "cub3d.h"
+/*
+** This function exits the game
+*/
 int	game_exit(void)
 {
 	quit("Game exit\n", 0);
 	return (0);
 }
 
+/*
+** Main function
+**
+** 1. Check for argc, only 1 arg is allowed
+** 2. Initialize roto struct
+** 3. Hook close window button to game exit
+** 4. Hook keypress events to handle_key_press()
+** 5. Hook keyrelease events to handle_key_release()
+** 6. Hook the main loop to render()
+** 7. Start looping
+*/
 int	main(int argc, char **argv)
 {
 	t_root	*root; 

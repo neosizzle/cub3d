@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-//This file contains map-related functions
-
 /*
 ** This function will check for all textures are present before reading the map
 **
@@ -71,8 +69,11 @@ void	read_textures(t_root *root, int fd)
 }
 
 /*
- This function will read the map data from an open fd
- and then call validation functions
+** This function will read the map data from an open fd
+** and then call validation functions
+**
+** @param t_root *root - The root struct
+** @param int fd - The open file descriptor
 */
 void	read_map(t_root *root, int fd)
 {
@@ -102,6 +103,17 @@ void	read_map(t_root *root, int fd)
 //read textures & colors
 //read colors
 //read map
+/*
+** This function initializes the map and reads the scene from a .cub file
+**
+** 1. Attempts to open a .cub file provided in path
+** 2. Checks if file ends with .cub
+** 3. Read and validate textures
+** 4. Read and validate map
+**
+** @param t_root *root - The root struct
+** @char *path - The file path to a .cub file
+*/
 void	init_map(t_root *root, char *path)
 {
 	int	fd;

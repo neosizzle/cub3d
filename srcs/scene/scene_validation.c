@@ -1,7 +1,12 @@
 #include "cub3d.h"
 
 /*
- Function that load the textures according to the identifier
+** Function that load the textures according to the identifier
+**
+** @param t_root *root - The root struct
+** @param char *iden - The direction identifier
+** @char **split - The entire string array containing
+**  identifier and path to texture
 */
 static int	process_textures(t_root *root, char *iden ,char **split)
 {
@@ -27,6 +32,11 @@ static int	process_textures(t_root *root, char *iden ,char **split)
 
 /*
 ** Function that sets hex colors inside root vars
+**
+** @param t_root *root - The root struct
+** @param char *iden - The floor or ceil identifier
+** @char **split - The entire string array containing
+**  identifier and path to texture
 */
 static int	process_color(t_root *root, char *iden, char **split)
 {

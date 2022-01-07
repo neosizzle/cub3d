@@ -3,6 +3,11 @@
 /*
 ** Function that sets carema and fov values for rendering elements on screen
 ** dir_x is not here cuz norme
+**
+** @param t_root *root - The root struct
+** @param double d_y - player direction vector y
+** @param double p_x - player camera vector x
+** @param double p_y - player camera vector y
 */
 void	set_camera(t_root *root, double d_y, double p_x, double p_y)
 {
@@ -15,7 +20,15 @@ void	set_camera(t_root *root, double d_y, double p_x, double p_y)
 }
 
 /*
- Function to turn left 
+** Function to turn left
+**
+** 1. Change the player direction vect according to this matrix formula in lodes
+**	[ cos(a) -sin(a) ] *
+**	[ sin(a)  cos(a) ]
+**	(a is the angle of rotation / sensitivity)
+** 2. Change the player camera vect as well
+**
+** @param t_root *root - The root struct
 */
 void	turn_left(t_root *root)
 {
@@ -39,7 +52,15 @@ void	turn_left(t_root *root)
 }
 
 /*
- Function to turn right 
+** Function to turn right
+** 
+** 1. Change the player direction vect according to this matrix formula in lodes
+**	[ cos(a) -sin(a) ] *
+**	[ sin(a)  cos(a) ]
+**	(a is the angle of rotation / sensitivity)
+** 2. Change the player camera vect as well
+**
+** @param t_root *root - The root struct
 */
 void	turn_right(t_root *root)
 {
@@ -63,7 +84,10 @@ void	turn_right(t_root *root)
 }
 
 /*
- Function to look up
+** Function to look up
+**
+** 1. Check if the camera height is at upper limit (2)
+**  - If not, increment the camera height by sens
 */
 void	look_up(t_root *root)
 {
@@ -77,7 +101,10 @@ void	look_up(t_root *root)
 }
 
 /*
- Function to look down
+** Function to look down
+**
+** 1. Check if the camera height is at lower limit (0)
+**  - If not, decrement the camera height by sens
 */
 void	look_down(t_root *root)
 {

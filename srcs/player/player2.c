@@ -1,7 +1,14 @@
 #include "cub3d.h"
 
 /*
- Funtion to move backward
+** Funtion to move backward
+**
+** 1. Check the map if the direction that we are about to move into is a wall.
+**	Taking speed into account.
+**	- If not, move player according to player speed
+** 2. Do the same for the y vector direction
+**
+** @param t_root *root - The root struct
 */
 void	move_backward(t_root *root)
 {
@@ -23,7 +30,14 @@ void	move_backward(t_root *root)
 }
 
 /*
- Funtion to move left
+** Funtion to move left
+**
+** 1. Check the map if the direction that we are about to move into is a wall.
+**	Taking speed into account.
+**	- If not, move player according to player speed
+** 2. Do the same for the y vector direction
+**
+** @param t_root *root - The root struct
 */
 void	move_left(t_root *root)
 {
@@ -45,7 +59,14 @@ void	move_left(t_root *root)
 }
 
 /*
- Funtion to move right
+** Funtion to move right
+**
+** 1. Check the map if the direction that we are about to move into is a wall.
+**	Taking speed into account.
+**	- If not, move player according to player speed
+** 2. Do the same for the y vector direction
+**
+** @param t_root *root - The root struct
 */
 void	move_right(t_root *root)
 {
@@ -67,7 +88,14 @@ void	move_right(t_root *root)
 }
 
 /*
- Funtion to move forward
+** Funtion to move rforward
+**
+** 1. Check the map if the direction that we are about to move into is a wall.
+**	Taking speed into account.
+**	- If not, move player according to player speed
+** 2. Do the same for the y vector direction
+**
+** @param t_root *root - The root struct
 */
 void	move_forward(t_root *root)
 {

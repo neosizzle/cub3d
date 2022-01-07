@@ -1,7 +1,10 @@
 #include "cub3d.h"
 
 /*
- Function to get the length of a 2d array
+** Function to get the length of a 2d array
+**
+** @param char **map - the 2d array in question
+** @return int i - the length of map
 */
 int	get_map_length(char **map)
 {
@@ -15,7 +18,11 @@ int	get_map_length(char **map)
 }
 
 /*
- Function that checks for all 1s in a line 
+** Function that checks for all 1s in a line 
+**
+** @param t_root *root - The root struct
+** @param int i - The current row of the map
+** @param int j - The current column of the map
 */
 void	check_f_l(t_root *root, int i, int j)
 {

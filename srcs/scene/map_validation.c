@@ -85,6 +85,18 @@ static void	validate_borders(char **map, int i, int j)
 	}
 }
 
+/*
+** Validates a players position
+**
+** 1. Check for player symbols N , S , E, W
+**  - if found, set dir vect and cam vect and pos
+**  - return 0
+**  - else, return 1
+**
+**  @param t_root *root - The root struct
+**  @param char **map - The game map
+**  @param ini and int j - The row and colmn of the map to check
+*/
 static int	validate_player(t_root *root, char **map, int i, int j)
 {
 	if (map[i][j] == 'N')
