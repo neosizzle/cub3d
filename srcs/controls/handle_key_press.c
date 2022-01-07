@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_key_press.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/07 14:44:56 by jng               #+#    #+#             */
+/*   Updated: 2022/01/07 14:48:50 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
@@ -10,7 +22,7 @@
 int	handle_key_press(int key, t_root *root)
 {
 	if (key == ESCAPE_KEY)
-		quit("Game exit\n",0);
+		quit("Game exit\n", 0);
 	if (key == LEFT_KEY)
 		root->control->look_left = 1;
 	if (key == RIGHT_KEY)
@@ -29,4 +41,3 @@ int	handle_key_press(int key, t_root *root)
 		root->control->look_down = 1;
 	return (0);
 }
-

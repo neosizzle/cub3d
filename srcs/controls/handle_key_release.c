@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_key_release.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/07 14:45:02 by jng               #+#    #+#             */
+/*   Updated: 2022/01/07 14:48:50 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
@@ -9,7 +21,6 @@
 */
 int	handle_key_release(int key, t_root *root)
 {
-	// printf("key released %d\n", key);
 	if (key == LEFT_KEY)
 		root->control->look_left = 0;
 	if (key == RIGHT_KEY)

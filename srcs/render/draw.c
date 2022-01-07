@@ -1,19 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/07 14:49:54 by jng               #+#    #+#             */
+/*   Updated: 2022/01/07 14:52:09 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
 ** Determines sides and initalizes values needed to call draw_texture_image();
 **
 ** 1. Depending on ray->side, will set the img variable to the specific texture
-** 2. Determine tex_x, the x coords of the texture. (remember to handle the mirrors)
+** 2. Determine tex_x, the x coords of the texture.
+**	(remember to handle the mirrors)
 ** 3. Set line draw start and draw end
-** 4. Call draw_texture_image() which will then draw the texture on the main image
+** 4. Call draw_texture_image() which will then draw
+**	the texture on the main image
 **
 ** @param t_root *root - The root struct
 ** @param t_ray *ray - the ray struct
 ** @param t_line *line - The line struct to be drawn
 ** @param double wall_x - The exact location / x-coord the wall was hit by ray
 */
-static void	paint_texture_line(t_root *root, t_ray *ray, t_line *line, double wall_x)
+static void	paint_texture_line(
+t_root *root,
+t_ray *ray,
+t_line *line,
+double wall_x)
 {
 	t_image	*img;
 	int		tex_x;

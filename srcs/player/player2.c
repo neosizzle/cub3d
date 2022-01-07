@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/07 14:48:38 by jng               #+#    #+#             */
+/*   Updated: 2022/01/07 14:48:42 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
@@ -17,15 +29,14 @@ void	move_backward(t_root *root)
 
 	game = root->game;
 	player = root->game->player;
-
 	if (game->map
-	[(int) (player->pos.y)]
-	[(int) (player->pos.x - player->dir_vect.x * ceil(player->speed))] != '1')
+		[(int)(player->pos.y)]
+		[(int)(player->pos.x - player->dir_vect.x * ceil(player->speed))]
+		!= '1')
 		player->pos.x -= (player->speed * player->dir_vect.x);
-
 	if (game->map
-	[(int) ((player->pos.y - player->dir_vect.y * ceil(player->speed)))]
-	[(int) (player->pos.x)] != '1')
+		[(int)((player->pos.y - player->dir_vect.y * ceil(player->speed)))]
+		[(int)(player->pos.x)] != '1')
 		player->pos.y -= (player->speed * player->dir_vect.y);
 }
 
@@ -46,15 +57,14 @@ void	move_left(t_root *root)
 
 	game = root->game;
 	player = root->game->player;
-
 	if (game->map
-	[(int) (player->pos.y)]
-	[(int) (player->pos.x - player->cam_plane_vect.x * ceil(player->speed))] != '1')
+		[(int)(player->pos.y)]
+		[(int)(player->pos.x - player->cam_plane_vect.x * ceil(player->speed))]
+		!= '1')
 		player->pos.x -= (player->speed * player->cam_plane_vect.x);
-
 	if (game->map
-	[(int) ((player->pos.y - player->cam_plane_vect.y * ceil(player->speed)))]
-	[(int) (player->pos.x)] != '1')
+		[(int)(player->pos.y - player->cam_plane_vect.y * ceil(player->speed))]
+		[(int)(player->pos.x)] != '1')
 		player->pos.y -= (player->speed * player->cam_plane_vect.y);
 }
 
@@ -75,15 +85,14 @@ void	move_right(t_root *root)
 
 	game = root->game;
 	player = root->game->player;
-
 	if (game->map
-	[(int) (player->pos.y)]
-	[(int) (player->pos.x + player->cam_plane_vect.x * ceil(player->speed))] != '1')
+		[(int)(player->pos.y)]
+		[(int)(player->pos.x + player->cam_plane_vect.x * ceil(player->speed))]
+		!= '1')
 		player->pos.x += (player->speed * player->cam_plane_vect.x);
-
 	if (game->map
-	[(int) ((player->pos.y + player->cam_plane_vect.y * ceil(player->speed)))]
-	[(int) (player->pos.x)] != '1')
+		[(int)(player->pos.y + player->cam_plane_vect.y * ceil(player->speed))]
+		[(int)(player->pos.x)] != '1')
 		player->pos.y += (player->speed * player->cam_plane_vect.y);
 }
 
@@ -104,14 +113,13 @@ void	move_forward(t_root *root)
 
 	game = root->game;
 	player = root->game->player;
-
 	if (game->map
-	[(int) (player->pos.y)]
-	[(int) (player->pos.x + player->dir_vect.x * ceil(player->speed))] != '1')
+		[(int)(player->pos.y)]
+		[(int)(player->pos.x + player->dir_vect.x * ceil(player->speed))]
+		!= '1')
 		player->pos.x += (player->speed * player->dir_vect.x);
-
 	if (game->map
-	[(int) ((player->pos.y + player->dir_vect.y * ceil(player->speed)))]
-	[(int) (player->pos.x)] != '1')
+		[(int)(player->pos.y + player->dir_vect.y * ceil(player->speed))]
+		[(int)(player->pos.x)] != '1')
 		player->pos.y += (player->speed * player->dir_vect.y);
 }

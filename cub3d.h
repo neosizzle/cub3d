@@ -214,6 +214,7 @@ void		init_controls(t_root *root);
 //format validation and utilities
 int			validate_line(t_root *root, char **split);
 void		validate_map(t_root *root);
+void		call_validations(t_root *root, char **map, int i, int j);
 
 //player utilities
 void		set_camera(t_root *root, double d_y, double p_x, double p_y);
@@ -232,17 +233,20 @@ void		put_pixel(t_image *frame, int x, int y, int color);
 void		put_frame(t_root *root, t_image *frame);
 int			render(void *param);
 void		draw_textures(t_root *root, t_ray *ray, t_player *player);
-void		draw_texture_image(t_root *root, t_ray *ray, t_line *line, t_image *img);
+void		draw_texture_image(t_root *root,
+				t_ray *ray,
+				t_line *line,
+				t_image *img);
 void		paint_line(t_root *root, t_line *line, int rgb);
 
 //raycasting
-void	raycasting(t_root *root, t_ray *ray);
-void	prep_height(t_ray *ray, t_player *player);
+void		raycasting(t_root *root, t_ray *ray);
+void		prep_height(t_ray *ray, t_player *player);
 
 //event / key handling
-int		handle_key_press(int key, t_root *root);
-int		handle_key_release(int key, t_root *root);
-void	event_executor(t_root *root);
+int			handle_key_press(int key, t_root *root);
+int			handle_key_release(int key, t_root *root);
+void		event_executor(t_root *root);
 
 //free functions
 void		destroy_root(t_root *root);

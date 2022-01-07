@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/07 14:54:11 by jng               #+#    #+#             */
+/*   Updated: 2022/01/07 14:54:13 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
@@ -34,7 +46,8 @@ static void	determine_step(t_ray *ray, t_player *player)
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - player->pos.x) * ray->delta_dist_x;
+		ray->side_dist_x = (ray->map_x + 1.0 - player->pos.x)
+			* ray->delta_dist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
@@ -44,7 +57,8 @@ static void	determine_step(t_ray *ray, t_player *player)
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - player->pos.y) * ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - player->pos.y)
+			* ray->delta_dist_y;
 	}
 }
 
@@ -81,7 +95,7 @@ static void	get_next_wallface(t_ray *ray)
 		if (ray->step_y == -1)
 			ray->side = SOUTH;
 		else
-			ray->side = NORTH;		
+			ray->side = NORTH;
 	}
 }
 
@@ -103,7 +117,6 @@ static void	perform_dda(t_root *root, t_ray *ray)
 		if (root->game->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
-	
 }
 
 /*

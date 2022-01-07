@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/07 14:45:18 by jng               #+#    #+#             */
+/*   Updated: 2022/01/07 14:48:50 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
-** Function that sets carema and fov values for rendering elements on screen
+** Function that sets camera and fov values for rendering elements on screen
 ** dir_x is not here cuz norme
 **
 ** @param t_root *root - The root struct
@@ -39,16 +51,16 @@ void	turn_left(t_root *root)
 	og_dirx = root->game->player->dir_vect.x;
 	og_planex = root->game->player->cam_plane_vect.x;
 	sens = root->game->player->sens;
-	root->game->player->dir_vect.x =
-			root->game->player->dir_vect.x * cos(-sens)
-			- root->game->player->dir_vect.y * sin(-sens);
+	root->game->player->dir_vect.x
+		= root->game->player->dir_vect.x * cos(-sens)
+		- root->game->player->dir_vect.y * sin(-sens);
 	root->game->player->dir_vect.y = og_dirx * sin(-sens)
-			+ root->game->player->dir_vect.y * cos(-sens);
-	root->game->player->cam_plane_vect.x =
-			root->game->player->cam_plane_vect.x * cos(-sens)
-			- root->game->player->cam_plane_vect.y * sin(-sens);
+		+ root->game->player->dir_vect.y * cos(-sens);
+	root->game->player->cam_plane_vect.x
+		= root->game->player->cam_plane_vect.x * cos(-sens)
+		- root->game->player->cam_plane_vect.y * sin(-sens);
 	root->game->player->cam_plane_vect.y = og_planex * sin(-sens)
-			+ root->game->player->cam_plane_vect.y * cos(-sens);
+		+ root->game->player->cam_plane_vect.y * cos(-sens);
 }
 
 /*
@@ -71,16 +83,16 @@ void	turn_right(t_root *root)
 	og_dirx = root->game->player->dir_vect.x;
 	og_planex = root->game->player->cam_plane_vect.x;
 	sens = root->game->player->sens;
-	root->game->player->dir_vect.x =
-			root->game->player->dir_vect.x * cos(sens)
-			- root->game->player->dir_vect.y * sin(sens);
+	root->game->player->dir_vect.x
+		= root->game->player->dir_vect.x * cos(sens)
+		- root->game->player->dir_vect.y * sin(sens);
 	root->game->player->dir_vect.y = og_dirx * sin(sens)
-			+ root->game->player->dir_vect.y * cos(sens);
-	root->game->player->cam_plane_vect.x =
-			root->game->player->cam_plane_vect.x * cos(sens)
-			- root->game->player->cam_plane_vect.y * sin(sens);
+		+ root->game->player->dir_vect.y * cos(sens);
+	root->game->player->cam_plane_vect.x
+		= root->game->player->cam_plane_vect.x * cos(sens)
+		- root->game->player->cam_plane_vect.y * sin(sens);
 	root->game->player->cam_plane_vect.y = og_planex * sin(sens)
-			+ root->game->player->cam_plane_vect.y * cos(sens);
+		+ root->game->player->cam_plane_vect.y * cos(sens);
 }
 
 /*

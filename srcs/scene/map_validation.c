@@ -13,9 +13,9 @@ static void	validate_symbols(t_root *root, char *line)
 	i = -1;
 	while (line[++i])
 	{
-		if (line[i] != '0' && line[i] != '1' && line[i] != 'N' &&
-			line[i] != 'S' && line[i] != 'E' && line[i] != 'W' &&
-			line[i] != ' ')
+		if (line[i] != '0' && line[i] != '1' && line[i] != 'N'
+			&& line[i] != 'S' && line[i] != 'E' && line[i] != 'W'
+			&& line[i] != ' ')
 			quit_root(root, "Error : Invalid map symbol\n", 1);
 	}
 }
@@ -32,7 +32,8 @@ static void	validate_symbols(t_root *root, char *line)
 */
 static int	validate_space(char **map, int i, int j)
 {
-	if (map[i][j] != ' ') return (0);
+	if (map[i][j] != ' ')
+		return (0);
 	if (j < (int) ft_strlen(map[i - 1]) && map[i - 1][j] == '0')
 		quit("Error : Map not closed spacecheck up\n", 1);
 	if (j < (int) ft_strlen(map[i + 1]) && map[i - 1][j] == '0')
@@ -166,11 +167,7 @@ void	validate_map(t_root *root)
 		if (map[i][ft_strlen(map[i]) - 1] != '1')
 			quit_root(root, "Error : Map right not closed R2\n", 1);
 		while (map[i][++j])
-		{
-			validate_symbols(root, map[i]);
-			validate_player(root, map, i, j);
-			validate_borders(map, i, j);
-		}
+			call_validations(root, map, i, j);
 	}
 	if (!root->game->player_found)
 		quit_root(root, "Error : No player found\n", 1);

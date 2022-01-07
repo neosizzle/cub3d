@@ -33,3 +33,17 @@ void	check_f_l(t_root *root, int i, int j)
 			quit_root(root, "Error : Map not closed border R1\n", 1);
 	}
 }
+
+/*
+** Function that calls validate symbols, root, player
+**
+** @param t_root *root - The root struct
+** @param int i - The current row of the map
+** @param int j - The current column of the map
+*/
+void	call_validations(t_root *root, char **map, int i, int j)
+{
+	validate_symbols(root, map[i]);
+	validate_player(root, map, i, j);
+	validate_borders(map, i, j);
+}
