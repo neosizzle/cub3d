@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/08 11:33:20 by jng               #+#    #+#             */
+/*   Updated: 2022/01/08 11:36:05 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
@@ -23,8 +35,9 @@ int	get_map_length(char **map)
 ** @param t_root *root - The root struct
 ** @param int i - The current row of the map
 ** @param int j - The current column of the map
+** @return int res - 0 if ok
 */
-void	check_f_l(t_root *root, int i, int j)
+int	check_f_l(t_root *root, int i, int j)
 {
 	--j;
 	while (root->game->map[i][++j])
@@ -32,6 +45,7 @@ void	check_f_l(t_root *root, int i, int j)
 		if (root->game->map[i][j] != '1' && root->game->map[i][j] != ' ')
 			quit_root(root, "Error : Map not closed border R1\n", 1);
 	}
+	return (0);
 }
 
 /*

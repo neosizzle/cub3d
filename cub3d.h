@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/08 11:51:14 by jng               #+#    #+#             */
+/*   Updated: 2022/01/08 11:51:15 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <unistd.h>
@@ -203,7 +215,7 @@ char		*get_next_line(int fd);
 void		load_texture(t_root *root, t_image *img, char *path);
 int			valid_cub(char *path);
 int			get_map_length(char **map);
-void		check_f_l(t_root *root, int i, int j);
+int			check_f_l(t_root *root, int i, int j);
 
 //init functions
 t_root		*init_root(char *str);

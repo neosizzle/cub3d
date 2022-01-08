@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/08 11:44:33 by jng               #+#    #+#             */
+/*   Updated: 2022/01/08 11:49:59 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 //frees arr of strings
@@ -17,7 +29,7 @@ void	free_split(char **split)
 }
 
 //frees game elements
-static void free_game(t_root *root)
+static void	free_game(t_root *root)
 {
 	if (root->game->map)
 		free_split(root->game->map);

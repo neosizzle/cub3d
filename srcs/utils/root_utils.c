@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   root_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/08 11:44:44 by jng               #+#    #+#             */
+/*   Updated: 2022/01/08 11:50:29 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 //This file will store all root related functions
@@ -11,7 +23,7 @@
 **
 ** @param t_root *root - the Root struct
 ** @param char *path - The .cub file path
-*/ 
+*/
 static void	init_game(t_root *root, char *path)
 {
 	root->game = (t_game *)malloc(sizeof(t_game));
@@ -47,8 +59,9 @@ static void	init_renderer(t_root *root)
 		quit_root(root, "Error: mlx_new_image() failure\n", 1);
 	root->mlx_img->width = WIN_WIDTH;
 	root->mlx_img->height = WIN_HEIGHT;
-	root->mlx_img->data = mlx_get_data_addr(root->mlx_img->img_ptr, &root->mlx_img->bits_per_pixel,
-		&root->mlx_img->line_length, &root->mlx_img->endian);
+	root->mlx_img->data = mlx_get_data_addr(root->mlx_img->img_ptr,
+			&root->mlx_img->bits_per_pixel,
+			&root->mlx_img->line_length, &root->mlx_img->endian);
 }
 
 /*
@@ -71,7 +84,8 @@ void	load_texture(t_root *root, t_image *img, char *path)
 		quit_root(root, "Error: mlx_xpm_file_to_image() failure\n", 1);
 	img->width = width;
 	img->height = height;
-	img->data = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
+	img->data = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 }
 
 /*
@@ -103,15 +117,14 @@ static void	init_textures(t_root *root)
 ** @param char *path - The file path to the .cub file
 ** @return t_root *root - the root struct
 */
-t_root *init_root(char *path)
+t_root	*init_root(char *path)
 {
-	t_root *res;
+	t_root	*res;
 
 	res = malloc(sizeof(t_root));
-
 	init_textures(res);
 	init_renderer(res);
 	init_game(res, path);
 	init_controls(res);
-	return res;
+	return (res);
 }

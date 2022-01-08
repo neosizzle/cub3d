@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_validation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/08 11:36:59 by jng               #+#    #+#             */
+/*   Updated: 2022/01/08 11:43:58 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
@@ -155,13 +167,9 @@ void	validate_map(t_root *root)
 	{
 		j = -1;
 		while (map[i][++j] && map[i][j] == ' ')
-		{
-		}
-		if (i == 0 || i == len - 1)
-		{
-			check_f_l(root, i, j);
+			;
+		if ((i == 0 || i == len - 1) && !check_f_l(root, i, j))
 			continue ;
-		}
 		if (map[i][j--] != '1')
 			quit_root(root, "Error : Map leftside not closed R2\n", 1);
 		if (map[i][ft_strlen(map[i]) - 1] != '1')

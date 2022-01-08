@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   scene_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/08 11:43:55 by jng               #+#    #+#             */
+/*   Updated: 2022/01/08 11:43:56 by jng              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /*
@@ -8,12 +20,20 @@
 */
 static int	check_textures(t_root *root)
 {
-	if (!root->no_texture->img_ptr || !root->so_texture->img_ptr || !root->we_texture->img_ptr ||
-		!root->ea_texture->img_ptr || !root->frgb || !root->crgb)
-		return 0;
-	return 1;
+	if (!root->no_texture->img_ptr || !root->so_texture->img_ptr
+		|| !root->we_texture->img_ptr
+		|| !root->ea_texture->img_ptr || !root->frgb || !root->crgb)
+		return (0);
+	return (1);
 }
 
+/*
+** This function wiil join line to buff, and get next line and store it on line
+**
+** @param char **buff - The pointer to buffer that you want line to append to
+** @param char **line - The pointer to line that you want to read to
+** @param int fd - The file descriptor to read from
+*/
 static void	read_to_buff(char **buff, char **line, int fd)
 {
 	char	*temp;
@@ -56,7 +76,7 @@ void	read_textures(t_root *root, int fd)
 		{
 			free(line);
 			free_split(split);
-			quit_root(root, "Error : Bad config, did not pass texture/color validation\n", 1);
+			quit_root(root, "Error : texture/color validation failed", 1);
 		}
 		finished_textures = check_textures(root);
 		free(line);
@@ -65,7 +85,7 @@ void	read_textures(t_root *root, int fd)
 	}
 	free(line);
 	if (!finished_textures)
-		quit_root(root, "Error : Bad config, missing some required properties\n", 1);
+		quit_root(root, "Error : config missing some required properties\n", 1);
 }
 
 /*
@@ -99,10 +119,6 @@ void	read_map(t_root *root, int fd)
 	free(buff);
 }
 
-//intialize map and config
-//read textures & colors
-//read colors
-//read map
 /*
 ** This function initializes the map and reads the scene from a .cub file
 **
