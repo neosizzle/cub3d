@@ -6,7 +6,7 @@
 /*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:52:46 by jng               #+#    #+#             */
-/*   Updated: 2022/01/07 14:52:46 by jng              ###   ########.fr       */
+/*   Updated: 2022/01/09 10:11:12 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_image *texture)
 	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
 		* (root->mlx_img->bits_per_pixel / 8) + 2] = texture->data[line->tex_y
 		* texture->line_length + line->tex_x
-		* (texture->bits_per_pixel / 8 ) + 2];
+		* (texture->bits_per_pixel / 8) + 2];
 }
 
 /*
