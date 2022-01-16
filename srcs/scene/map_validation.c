@@ -6,7 +6,7 @@
 /*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 11:36:59 by jng               #+#    #+#             */
-/*   Updated: 2022/01/08 11:43:58 by jng              ###   ########.fr       */
+/*   Updated: 2022/01/16 09:58:15 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** @param t_root * root - The root struct
 ** @param char *line - The current map row
 */
-static void	validate_symbols(t_root *root, char *line)
+void	validate_symbols(t_root *root, char *line)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ static int	validate_space(char **map, int i, int j)
 ** @param int i - the current row 
 ** @param int j - the current column
 */
-static void	validate_borders(char **map, int i, int j)
+void	validate_borders(char **map, int i, int j)
 {
 	if (validate_space(map, i, j))
 		return ;
@@ -110,7 +110,7 @@ static void	validate_borders(char **map, int i, int j)
 **  @param char **map - The game map
 **  @param ini and int j - The row and colmn of the map to check
 */
-static int	validate_player(t_root *root, char **map, int i, int j)
+int	validate_player(t_root *root, char **map, int i, int j)
 {
 	if (map[i][j] == 'N')
 	{

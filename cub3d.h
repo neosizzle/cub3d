@@ -6,7 +6,7 @@
 /*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 11:51:14 by jng               #+#    #+#             */
-/*   Updated: 2022/01/08 11:51:15 by jng              ###   ########.fr       */
+/*   Updated: 2022/01/16 09:58:15 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,9 @@ void		init_controls(t_root *root);
 //format validation and utilities
 int			validate_line(t_root *root, char **split);
 void		validate_map(t_root *root);
+void		validate_symbols(t_root *root, char *line);
+void		validate_borders(char **map, int i, int j);
+int			validate_player(t_root *root, char **map, int i, int j);
 void		call_validations(t_root *root, char **map, int i, int j);
 
 //player utilities
