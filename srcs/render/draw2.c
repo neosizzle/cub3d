@@ -6,7 +6,7 @@
 /*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:52:46 by jng               #+#    #+#             */
-/*   Updated: 2022/01/09 10:11:12 by jng              ###   ########.fr       */
+/*   Updated: 2022/01/16 10:23:36 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,9 @@ static void	pixel_on_img(int rgb, int x, int y, t_image *img)
 	r = (rgb >> 16) & 0xFF;
 	g = (rgb >> 8) & 0xFF;
 	b = rgb & 0xFF;
-	img->data[y * img->line_length + x * img->bits_per_pixel / 8] = r;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8] = b;
 	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 1] = g;
-	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 2] = b;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 2] = r;
 }
 
 /*

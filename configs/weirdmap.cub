@@ -1,9 +1,9 @@
-F 173,164,140
+F 97,247,67
 NO ./textures/amongus.xpm
 SO ./textures/amongus.xpm
 WE ./textures/jib.xpm
 EA ./textures/jib.xpm
-C 225,30,0 
+C 235,115,115
 
         111111
         10S001
