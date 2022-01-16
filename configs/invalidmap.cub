@@ -1,8 +1,8 @@
 F 220,100,0
 NO ./textures/wall4.xpm
-SO ./textures/wall4.xpm
+SO ./textures/wall.xpm
 WE ./textures/wall4.xpm
-EA ./textures/wall4.xpm
+EA ./textures/wall.xpm
 C 225,30,0 
 
         1111111111111111111111111
