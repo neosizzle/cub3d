@@ -26,3 +26,12 @@ However,
 The basic idea of raycasting is as follows: the map is a 2D square grid, and each square can either be 0 (= no wall), or 1 (= wall)
 
 ![Sample map](https://github.com/neosizzle/cub3d/blob/main/pictures/sample-map.png)
+
+You then imagine your screen as a coordinate plane, and it seperated into columns (x - axis) like so :
+
+![monitor](https://github.com/neosizzle/cub3d/blob/main/pictures/monitor.png)
+
+For every x of the screen (i.e. for every vertical stripe of the screen), send out a ray that starts at the player location and with a direction that depends on both the player's looking direction, and the x-coordinate of the screen. Then, let this ray move forward on the 2D map, until it hits a map square that is a wall. If it hit a wall, calculate the distance of this hit point to the player, and use this distance to calculate how high this wall has to be drawn on the screen: the further away the wall, the smaller it's on screen, and the closer, the higher it appears to be. These are all 2D calculations.
+
+The end result will look something like this :
+![raycasting-animation](https://github.com/neosizzle/cub3d/blob/main/pictures/raycasting.gif)
