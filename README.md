@@ -58,7 +58,7 @@ These are examples of valid map files.
 ![valid_map1](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map1.png)
 ![valid_map2](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map2.png)
 
-I wont talk much about the texture and valiadtion colors here. 
+I wont talk much about the texture and colors here. 
 Unlike so_long, the rules of the map are laxed and allowing more creative freedom. The map will may not be rectangular in shape and may have many weird edges/curves and corners. However, the map can still be parsed as a 2d
 character array and treated like normal strings with different lengths each row.
 
