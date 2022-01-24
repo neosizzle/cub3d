@@ -2,7 +2,7 @@
 
 This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/raycasting.html), If you cant understand the one provided, this guide is for you.
 
--  [Introduction](#inrtoduction)
+-  [Introduction](#introduction)
 -  [Map parsing and validating](#map-parsing-and-validating)
 -  [Player direction vector and camera vector](#player-direction-vector-and-camera-vector)
 -  [Ray Properties](#ray-properties)
