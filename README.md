@@ -53,6 +53,7 @@ map and are up to you to handle. You must be able to parse any kind of map,
 as long as it respects the rules of the map.
 
 These are examples of valid map files.
+
 ![valid_map](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map.png)
 ![valid_map1](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map1.png)
 ![valid_map2](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map2.png)
