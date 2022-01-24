@@ -66,7 +66,7 @@ As such, I came up with a few map validation rules. Assume that we are scanning 
 
 - Ignore all leading whitespaces.
 - If the current row is the 0th row or the final row, only accept '1's and ' 's.
-	-  else, The first character should always be a '1'.
+	-  else, The first and final character should always be a '1'.
 - In the case of any non leading whitespaces, the only acceptable characters adjacent to the space are '1's or ' 's.
 - If strlen(curr_row) > strlen(row_on_top) && current col > strlen(row_on_top), current character should be '1'
 - If strlen(curr_row) > strlen(row_on_bottom) && current col > strlen(row_on_bottom), current character should be '1'
