@@ -24,4 +24,5 @@ However,
 - This method assumes that the map has constant height
 
 The basic idea of raycasting is as follows: the map is a 2D square grid, and each square can either be 0 (= no wall), or 1 (= wall)
+
 ![Sample map](https://github.com/neosizzle/cub3d/blob/main/pictures/sample-map.png)
