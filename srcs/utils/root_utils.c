@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   root_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
+/*   By: jng <jng@student.42kl.edu>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 11:44:44 by jng               #+#    #+#             */
-/*   Updated: 2022/01/08 11:50:29 by jng              ###   ########.fr       */
+/*   Updated: 2022/01/24 14:14:20 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	init_renderer(t_root *root)
 	if (!root->mlx)
 		quit("Error : mlx_init() failure\n", 1);
 	root->mlx_win
-		= mlx_new_window(root->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
+		= mlx_new_window(root->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (!root->mlx_win)
 		quit("Error : mlx_init() failure\n", 1);
 	root->mlx_img->img_ptr = mlx_new_image(root->mlx, WIN_WIDTH, WIN_HEIGHT);
