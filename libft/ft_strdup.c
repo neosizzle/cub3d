@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jng <jng@student.42kl.edu>                 +#+  +:+       +#+        */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:10:47 by jng               #+#    #+#             */
-/*   Updated: 2022/01/24 14:11:20 by jng              ###   ########.fr       */
+/*   Updated: 2022/01/26 11:03:44 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
+
 // size_t ft_strlen(const char *s)
 // {
 // 	int	res;
