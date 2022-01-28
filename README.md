@@ -100,4 +100,131 @@ As mentioned in the introdution, we will have to determine the distance of each 
  
  ![DDA2](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/DDA2.png)
 
-As you can see, the algorithm stops (ray stop moving forward) once one of the green boxes highlighted a wall.
+As you can see, the algorithm stops (ray stop moving forward) once one of the green boxes highlighted a wall. Since the distance between boxes are always constant (1 unit), we can just multiply the deltas between ray intersections and the map grid bounds to find the length of the ray.
+
+## Ray Casting implementation
+Below is the implementation of a simple raycaster.
+First, we declare some required variables for player position and direction as 
+well as FOV.
+```
+
+int main(int /*argc*/, char */*argv*/[])
+{
+  double posX = 22, posY = 12;  //x and y start position
+  double dirX = -1, dirY = 0; //initial direction vector
+  double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+```
+After setting up the player, the gameloop starts. This should be replaced by your mlx_loop_hook function.
+
+```
+
+  while(!done())
+  {
+```
+
+Here, we start the actual raycasting. We will cast a ray for every pixel of the screens width. More variables are declared.
+```
+
+    for(int x = 0; x < w; x++)
+    {
+      //calculate ray position and direction
+      double cameraX = 2 * x / double(w) - 1; //x-coordinate in camera space
+      double rayDirX = dirX + planeX * cameraX;
+      double rayDirY = dirY + planeY * cameraX;
+      
+```
+
+For the next section of the code, mapX and mapY represent the current square of the map the ray is in. The ray position itself is a floating point number and contains both info about in which square of the map we are, and **where** in that square we are, but mapX and mapY are only the coordinates of that square.
+
+sideDistX and sideDistY are initially the distance the ray has to travel from its start position to the first x-side and the first y-side. Later in the code they will be incremented while steps are taken.
+
+deltaDistX and deltaDistY are the distance the ray has to travel to go from 1 x-side to the next x-side, or from 1 y-side to the next y-side. The following image shows the initial sideDistX, sideDistY and deltaDistX and deltaDistY:
+
+![rc_implement](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+
+We can get deltaDistX and deltaDistY using the following formulas:
+deltaDistX = abs(1 / rayDirX)
+deltaDistY = abs(1 / rayDirY)
+
+This formula is derived from pythagoras theorem, which is originally
+deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
+deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
+
+and then simplified to :
+deltaDistX = abs(|rayDir| / rayDirX)
+deltaDistY = abs(|rayDir| / rayDirY)
+
+However, we can use 1 instead of |rayDir|, because only the *ratio* between deltaDistX and deltaDistY matters for the DDA code that follows later below
+
+Finally, hit is used to determinate whether or not the coming loop may be ended, and side will contain if an x-side or a y-side of a wall was hit. If an x-side was hit, side is set to 0, if an y-side was hit, side will be 1. By x-side and y-side, I mean the lines of the grid that are the borders between two squares.
+
+```
+      //which box of the map we're in
+      int mapX = int(posX);
+      int mapY = int(posY);
+
+      //length of ray from current position to next x or y-side
+      double sideDistX;
+      double sideDistY;
+
+       //length of ray from one x or y-side to next x or y-side
+      double deltaDistX = (rayDirX == 0) ? 1e30 : std::abs(1 / rayDirX);
+      double deltaDistY = (rayDirY == 0) ? 1e30 : std::abs(1 / rayDirY);
+      double perpWallDist;
+
+      //what direction to step in x or y-direction (either +1 or -1)
+      int stepX;
+      int stepY;
+
+      int hit = 0; //was there a wall hit?
+      int side; //was a NS or a EW wall hit?
+```
+
+Now, before the actual DDA can start, first stepX, stepY, and the initial sideDistX and sideDistY still have to be calculated.
+
+```
+      //calculate step and initial sideDist
+      if (rayDirX < 0)
+      {
+        stepX = -1;
+        sideDistX = (posX - mapX) * deltaDistX;
+      }
+      else
+      {
+        stepX = 1;
+        sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+      }
+      if (rayDirY < 0)
+      {
+        stepY = -1;
+        sideDistY = (posY - mapY) * deltaDistY;
+      }
+      else
+      {
+        stepY = 1;
+        sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+      }
+```
+Now the actual DDA starts. It's a loop that increments the ray with 1 square every time, until a wall is hit. Each time, either it jumps a square in the x-direction (with stepX) or a square in the y-direction (with stepY), it always jumps 1 square at once. If the ray's direction would be the x-direction, the loop will only have to jump a square in the x-direction everytime, because the ray will never change its y-direction. If the ray is a bit sloped to the y-direction, then every so many jumps in the x-direction, the ray will have to jump one square in the y-direction. If the ray is exactly the y-direction, it never has to jump in the x-direction, etc..
+
+```
+      //perform DDA
+      while (hit == 0)
+      {
+        //jump to next map square, either in x-direction, or in y-direction
+        if (sideDistX < sideDistY)
+        {
+          sideDistX += deltaDistX;
+          mapX += stepX;
+          side = 0;
+        }
+        else
+        {
+          sideDistY += deltaDistY;
+          mapY += stepY;
+          side = 1;
+        }
+        //Check if ray has hit a wall
+        if (worldMap[mapX][mapY] > 0) hit = 1;
+      } 
+```
