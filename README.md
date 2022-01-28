@@ -6,7 +6,7 @@ This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/rayca
 -  [Map parsing and validating](#map-parsing-and-validating)
 -  [Player direction vector and camera vector](#player-direction-vector-and-camera-vector)
 -  [DDA Algorithm](#dda-algorithm)
--  [Ray Casting implementation](#ray-properties)
+-  [Ray Casting implementation](#ray-casting-implementation)
 -  [Camera plane vector](#camera-plane-vector)
 -  [Image scaling and transformation for MLX](#image-scaling-and-transformation-for-MLX)
 -  [Floor and ceiling colors](#floor-and-ceiling-colors)
