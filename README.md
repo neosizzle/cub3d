@@ -145,16 +145,19 @@ deltaDistX and deltaDistY are the distance the ray has to travel to go from 1 x-
 We can get deltaDistX and deltaDistY using the following formulas:
 
 deltaDistX = abs(1 / rayDirX)
+
 deltaDistY = abs(1 / rayDirY)
 
 This formula is derived from pythagoras theorem, which is originally:
 
 deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
+
 deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
 
 and then simplified to :
 
 deltaDistX = abs(|rayDir| / rayDirX)
+
 deltaDistY = abs(|rayDir| / rayDirY)
 
 However, we can use 1 instead of |rayDir|, because only the *ratio* between deltaDistX and deltaDistY matters for the DDA code that follows later below
