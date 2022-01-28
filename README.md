@@ -5,12 +5,11 @@ This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/rayca
 -  [Introduction](#introduction)
 -  [Map parsing and validating](#map-parsing-and-validating)
 -  [Player direction vector and camera vector](#player-direction-vector-and-camera-vector)
--  [Ray Properties](#ray-properties)
 -  [DDA Algorithm](#dda-algorithm)
+-  [Ray Casting implementation](#ray-properties)
 -  [Camera plane vector](#camera-plane-vector)
 -  [Image scaling and transformation for MLX](#image-scaling-and-transformation-for-MLX)
 -  [Floor and ceiling colors](#floor-and-ceiling-colors)
--  [Player rotation and movement](#player-rotation-and-movement)
 
 Updated as of Jan 2022.
 
@@ -25,16 +24,16 @@ However,
 
 The basic idea of raycasting is as follows: the map is a 2D square grid, and each square can either be 0 (= no wall), or 1 (= wall)
 
-![Sample map](https://github.com/neosizzle/cub3d/blob/main/pictures/sample-map.png)
+![Sample map](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/sample-map.png)
 
 You then imagine your screen as a coordinate plane, and it seperated into columns (x - axis) like so :
 
-![monitor](https://github.com/neosizzle/cub3d/blob/main/pictures/monitor.png)
+![monitor](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/monitor.png)
 
 For every x of the screen (i.e. for every vertical stripe of the screen), send out a ray that starts at the player location and with a direction that depends on both the player's looking direction, and the x-coordinate of the screen. Then, let this ray move forward on the 2D map, until it hits a map square that is a wall. If it hit a wall, calculate the distance of this hit point to the player, and use this distance to calculate how high this wall has to be drawn on the screen: the further away the wall, the smaller it's on screen, and the closer, the higher it appears to be. These are all 2D calculations.
 
 The end result will look something like this :
-![raycasting-animation](https://github.com/neosizzle/cub3d/blob/main/pictures/raycasting.gif)
+![raycasting-animation](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/raycasting.gif)
 
 ... and thats pretty much the basic idea of raycasting. I will be talking about map parsing and validation next, so if you want to skip to the raycasting implementation, click [here](#player-direction-vector-and-camera-vector)
 
@@ -54,9 +53,9 @@ as long as it respects the rules of the map.
 
 These are examples of valid map files.
 
-![valid_map](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map.png)
-![valid_map1](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map1.png)
-![valid_map2](https://github.com/neosizzle/cub3d/blob/main/pictures/valid_map2.png)
+![valid_map](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/valid_map.png)
+![valid_map1](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/valid_map1.png)
+![valid_map2](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/valid_map2.png)
 
 I wont talk much about the texture and colors here. 
 Unlike so_long, the rules of the map are laxed and allowing more creative freedom. The map will may not be rectangular in shape and may have many weird edges/curves and corners. However, the map can still be parsed as a 2d
@@ -76,17 +75,17 @@ Those rules should pass all the map requirements given.
 ## Player direction vector and camera vector
 Before we cast any rays, we will first have to determine WHERE to cast the rays. Obviously, we will have to define where the player is looking at.
 We can do exacly that with a vector, like so.
-![player_dir_vect](https://github.com/neosizzle/cub3d/blob/main/pictures/player_dir_vect.png)
+![player_dir_vect](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/player_dir_vect.png)
 
 In the image above, the player (green) is looking at the north direction straight up (red line). the direction can be defined as a vector with x and y components (y = +1, x = 0).
 Now we know the vector that defines the players looking direction, we can use that vector to determine the camera vector (the vector that defines FOV). The camera vector is perpendicular to the players direction vector and can be defined as so. (purple line).
 
-![cam_vect](https://github.com/neosizzle/cub3d/blob/main/pictures/cam_vect.png)
+![cam_vect](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/cam_vect.png)
 
 And we can connect the ends of both vectors, we will obtain a cone shaped viewing zone :
-![cam_vect_2](https://github.com/neosizzle/cub3d/blob/main/pictures/cam_vect_2.png)
+![cam_vect_2](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/cam_vect_2.png)
 
 If the direction vector is much longer than the camera plane, the FOV will be much smaller than 90°, and you'll have a very narrow vision. You'll see everything more detailed though and there will be less depth, so this is the same as zooming in:
 
-![cam_vect_3](https://github.com/neosizzle/cub3d/blob/main/pictures/cam_vect_3.png)
+![cam_vect_3](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/cam_vect_3.png)
 
