@@ -89,3 +89,15 @@ If the direction vector is much longer than the camera plane, the FOV will be mu
 
 ![cam_vect_3](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/cam_vect_3.png)
 
+## DDA Algorithm
+As mentioned in the introdution, we will have to determine the distance of each ray from the player to a wall to determine the height of the wall to draw. This brings us to an algorithm called "Digital Differential Analysis" or DDA for short.
+
+![DDA](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/DDA.png)
+
+ DDA is a fast algorithm typically used on square grids to find which squares a line hits (for example to draw a line on a screen, which is a grid of square pixels). So we can also use it to find which squares of the map our ray hits, and stop the algorithm once a square that is a wall is hit.
+ 
+ The image aboves shows how it traverses and how to stops to check if the current box is a wall or not, the image below shows the squares checked.
+ 
+ ![DDA2](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/DDA2.png)
+
+As you can see, the algorithm stops (ray stop moving forward) once one of the green boxes highlighted a wall.
