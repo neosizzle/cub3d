@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jng <jng@student.42kl.edu>                 +#+  +:+       +#+        */
+/*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:10:37 by jng               #+#    #+#             */
-/*   Updated: 2022/01/24 14:11:20 by jng              ###   ########.fr       */
+/*   Updated: 2022/01/26 11:03:44 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
+
 // void	ft_putchar_fd(char c, int fd)
 // {
 // 	write(fd, &c, 1);

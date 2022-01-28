@@ -1,4 +1,4 @@
-NAME=cub3d
+NAME=cub3D
 SRCS=srcs/*.c srcs/utils/*.c srcs/scene/*.c srcs/render/*.c srcs/player/*.c srcs/controls/*.c 
 INC=/usr/include
 MLX_FLAGS_MAC = -Imlx -lmlx -framework OpenGL -framework AppKit
