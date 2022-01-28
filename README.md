@@ -72,3 +72,21 @@ As such, I came up with a few map validation rules. Assume that we are scanning 
 - If strlen(curr_row) > strlen(row_on_bottom) && current col > strlen(row_on_bottom), current character should be '1'
 
 Those rules should pass all the map requirements given.
+
+## Player direction vector and camera vector
+Before we cast any rays, we will first have to determine WHERE to cast the rays. Obviously, we will have to define where the player is looking at.
+We can do exacly that with a vector, like so.
+![player_dir_vect](https://github.com/neosizzle/cub3d/blob/main/pictures/player_dir_vect.png)
+
+In the image above, the player (green) is looking at the north direction straight up (red line). the direction can be defined as a vector with x and y components (y = +1, x = 0).
+Now we know the vector that defines the players looking direction, we can use that vector to determine the camera vector (the vector that defines FOV). The camera vector is perpendicular to the players direction vector and can be defined as so. (purple line).
+
+![cam_vect](https://github.com/neosizzle/cub3d/blob/main/pictures/cam_vect.png)
+
+And we can connect the ends of both vectors, we will obtain a cone shaped viewing zone :
+![cam_vect_2](https://github.com/neosizzle/cub3d/blob/main/pictures/cam_vect_2.png)
+
+If the direction vector is much longer than the camera plane, the FOV will be much smaller than 90°, and you'll have a very narrow vision. You'll see everything more detailed though and there will be less depth, so this is the same as zooming in:
+
+![cam_vect_3](https://github.com/neosizzle/cub3d/blob/main/pictures/cam_vect_3.png)
+
