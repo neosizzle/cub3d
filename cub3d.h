@@ -6,7 +6,7 @@
 /*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 11:51:14 by jng               #+#    #+#             */
-/*   Updated: 2022/01/16 10:57:29 by jng              ###   ########.fr       */
+/*   Updated: 2022/03/02 17:55:38 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,26 @@
 # define SOUTH 2
 # define EAST 3
 # define WEST 4
-# define ESCAPE_KEY 53
-# define UP_KEY 126
-# define DOWN_KEY 125
-# define RIGHT_KEY 124
-# define LEFT_KEY 123
-# define W_KEY 13
-# define A_KEY 0
-# define S_KEY 1
-# define D_KEY 2
+// # define ESCAPE_KEY 53
+// # define UP_KEY 126
+// # define DOWN_KEY 125
+// # define RIGHT_KEY 124
+// # define LEFT_KEY 123
+// # define W_KEY 13
+// # define A_KEY 0
+// # define S_KEY 1
+// # define D_KEY 2
 
 // linux keybinds
-// # define ESCAPE_KEY 65307
-// # define UP_KEY 65362
-// # define DOWN_KEY 65364
-// # define RIGHT_KEY 65363
-// # define LEFT_KEY 65361
-// # define W_KEY 119
-// # define A_KEY 97
-// # define S_KEY 115
-// # define D_KEY 100
+# define ESCAPE_KEY 65307
+# define UP_KEY 65362
+# define DOWN_KEY 65364
+# define RIGHT_KEY 65363
+# define LEFT_KEY 65361
+# define W_KEY 119
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
 
 //struct to store the x y coords of an obj
 typedef struct s_coord
@@ -59,7 +59,7 @@ typedef struct s_coord
 ** Struct to store all raycasting related variable needed for rc calculation
 **
 ** curr_x - current x index relative to the screen / how many pixels width
-** map_x/y - current x/y index realtaive to the map
+** map_x/y - current x/y index reltaive to the map
 ** cam_x - x- coordinate in camera space
 ** ray_dir_x/y = Ray x/y direction vector
 ** side_dist_x/y - length of ray from current position to next x or y-side
@@ -99,8 +99,9 @@ typedef struct s_ray
 ** img_ptr - The image pointer mlx gives when creating new image
 ** data - The address adta given when calling mlx_get_img_addr
 ** bits_per_pixel - The amount of bits per pixel for colouring
-** line length - is the number of bytes used to store one line of
-**				 the image in memory (unused)
+** line_length - is the number of bytes used to store one line of
+**				 the image in memory (unused) . 
+				 If its zero means its stored in a big contigious chunk
 ** endian -  tells you wether the pixel color in the image needs
 ** 				to be stored in little endian or big endian (unused)
 ** width - Width of image

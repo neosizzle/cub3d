@@ -6,44 +6,12 @@
 /*   By: jng <jng@student.42kl.edu.my>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 14:52:46 by jng               #+#    #+#             */
-/*   Updated: 2022/01/16 10:23:36 by jng              ###   ########.fr       */
+/*   Updated: 2022/03/02 17:43:25 by jng              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//bug for bonus : segfault when player spams up down key to look around
-// USEFUL LOGGING
-// static int frame;
-
-// ++frame;
-// if (frame % 20 == 0)
-// {
-// 	printf("data accessed %d, idx %d\n", (int) texture->data[line->tex_y
-// 		* texture->line_length + line->tex_x
-//		* (texture->bits_per_pixel / 8)], line->tex_y
-// 		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8));
-// 	// printf("idx : %d, sizeof %ld\n", line->tex_y
-// 	// * texture->line_length + line->tex_x
-//		* (texture->bits_per_pixel / 8), sizeof(*texture->img_ptr));
-// }
-// printf("WIN_HEIGHT * root->game->player->cam_height %f\n"
-//	, WIN_HEIGHT * root->game->player->cam_height);
-// printf("accessing texture data at idx %d\n",line->tex_y
-// 	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8));
-// printf("accessing img data at idx %d\n", line->y
-//	* root->mlx_img->line_length + line->x
-// 	* root->mlx_img->bits_per_pixel / 8);
-// printf("data accessed %d\n", (int) texture->data[line->tex_y
-// 	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)]);
-// printf("ray->line_height %d\n",ray->line_height);
-// printf("line->y %d\n",line->y);
-// printf("line->tex_y %d\n",line->tex_y);
-// printf("texture->line_length %d\n",texture->line_length);
-//printf("line->x %d\n",line->x);
-// printf("line->tex_x %d\n",line->tex_x);
-// printf("texture->bits_per_pixel %d\n",
-//	texture->bits_per_pixel);
 /*
 ** Obtain scale and change data value according to texture on scale 
 **

@@ -261,3 +261,102 @@ Prepwalldist is the distance between the wall and the cam vector.
       if(side == 0) perpWallDist = (sideDistX - deltaDistX);
       else          perpWallDist = (sideDistY - deltaDistY);
 ```
+
+
+## Image scaling and transformation for MLX
+Now that we know the distance between the plane as the wall, we can use the information to draw images on the display using images.
+
+Before we start drawing anything, its best that we create a struct to keep track of the line (line as in the vertical lines you draw on the display) properties.
+
+The properties you need to keep track of are as so:
+```c
+typedef  struct  s_line
+{
+	int  x; //the x coordinate of line relative to screen
+	int  y; //the current pixel index of the line (along y axis)
+	int  y0; //y start index of drawing texture
+	int  y1; //y end index of drawing texture
+	int  tex_x; //x coordinate of texture to draw
+	int  tex_y; //y coordinate of texture to draw
+} t_line;
+```
+
+Then, you will need to create a variable that stores the position of the x-axis you hit on that wall.
+
+For instance, if we represent the texture below as a 2d grid, you can see the x points like so:
+![textures_x](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+you will also need to account for the players direction because the x points will be mirrored if you player turns around.
+
+We call this value wall_x, and we can calculate it like so:
+```c
+double	wall_x;
+
+if (ray->side == WEST || ray->side == EAST)
+	wall_x = player->pos.y + ray->prep_wall_dist * ray->ray_dir_y;
+else
+	wall_x = player->pos.x + ray->prep_wall_dist * ray->ray_dir_x;
+wall_x -= floor(wall_x); //make it start from 0
+```
+Now, we can set line x to the current x coord of the screen to draw:
+```c
+line->x = ray->curr_x;
+```
+
+After that, we can start painting the textures/colors (walls, ceiling/floor) on the screen.
+```c
+//paint texture if the ray hits a wall
+if (root->game->map[ray->map_y][ray->map_x] == '1')
+	//assumes that this function paints textures
+	paint_texture_line(root, ray, line, wall_x);
+	
+//reset line to start at the top pixel
+line->y0 = 0;
+
+// reset line to end at the textures beginning pixel
+line->y1 = ray->draw_start;
+
+//assumes that this function paints a solid color
+paint_line(root, line, root->crgb); //we paint the ceiling
+
+//reset line to start at the bottom pixel
+line->y0 = WIN_HEIGHT;
+
+//reset line to end at the textures end pixel
+line->y1 = ray->draw_end;
+
+//assumes that this function paints a solid color
+paint_line(root, line, root->frgb);//we paint the floor
+```
+
+That was a high level overview on how can you use the infromation obtained from DDA to draw something on the screen. 
+
+Before we get into drawing the textures, we have to first understand how images are formed and created in minilibx.
+The image struct in minilibx contains several information:
+```c
+/*
+** Gets the data address of the current image.
+** (returned by mlx_get_data_addr)
+**
+** @param	void *img_ptr			the image instance;
+** @param	int  *bits_per_pixel	a pointer to where the bpp is written;
+** @param	int  *size_line		a pointer to where the line is written;
+** @param	int  *endian		a pointer to where the endian is written;
+** @return	char*				the memory address of the image.
+*/
+```
+Those in the docs werent very helpful, the real meaning behind those variables are as so:
+[source](https://www.x.org/releases/X11R7.6/doc/libX11/specs/libX11/libX11.html#id2724496)
+```
+bits_per_pixel - The amount of bits per pixel for colouring
+				 should be a number divisible by 3, for r, g and b
+size_line	   - The amount of bytes for each line of the image. 0 means 
+				 the image is stored in 1 big contigious block
+endian		   - tells you wether the pixel color in the image needs
+				to be stored in little endian or big endian (unused)
+```
+
+To actually get the textures and print them on a display, we need to execute a few steps:
+1. Set the current line->y to the smaller of line->y0 and line->y1
+2. Set line_max (a new var) to the bigger of line->y0 and line->y1
+3. Loop through line-> to line->max
+	- Put the te
