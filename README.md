@@ -355,8 +355,90 @@ endian		   - tells you wether the pixel color in the image needs
 				to be stored in little endian or big endian (unused)
 ```
 
+And suppose we have a function texture_on_img which will audit the image in the screen (your mlx window) with parts of the textures that you loaded (your .xpm files)
+```c
+void texture_on_img(
+t_root *root,
+t_ray *ray,
+t_line *line,
+t_image *texture);
+```
+
+We can change the image data by doing these calculations :
+1.  Calculate the scale from the screen to the texture
+    ```c
+        //this value will determine how big one certain pixel
+        // is translated to the screen
+        scale = line->y - (WIN_HEIGHT) / 2 + ray->line_height ;
+        
+        //since data is stored in a 1d array, we need to use the
+        //line_length property to get the actual offset. The formula becomes
+        scale = line->y * texture->line_length
+		- (WIN_HEIGHT * root->game->player->cam_height) * texture->line_length
+		/ 2 + ray->line_height * texture->line_length / 2;
+    ```
+2. Calculate the textures y coord to be printed with the scale
+    ```c
+        //remember, we are printing one pixel in a straight line from top to bottom.
+        //this will give is the y point of the texture to print.
+        line->tex_y = ((scale * texture->height) / ray->line_height);
+        
+        //we will need to adjust with line length so the formula becomes
+        line->tex_y = ((scale * texture->height) / ray->line_height)
+		/ texture->line_length;
+    ```
+3. Set main image data to the textures image data based on line->x and tex_y obtained
+    ```c
+        // we can just simply modify the root image data
+        //itself with the values we obtained above
+        //line->y - the y point of the current vertical line
+        //line->x - the x point of the current vertical line
+        //line->tex_y - the y point of the texture
+        //line->tex_x - the x point of the texture
+        //texture->bitsperpixel - bpp/8 = r, (bpp/8) + 1 = g, (bpp/8) + 2 = b,
+        //              Very wack need to refer to minilibx docs
+        root->mlx_img->data[line->y + line->x
+		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
+		+ line->tex_x * (texture->bits_per_pixel / 8)];
+		
+		//and to adjust for line size
+		root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
+		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
+		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)];
+    ```
+To put it all together, our texture_on_img will look something like this :
+```c
+static void	texture_on_img(
+t_root *root,
+t_ray *ray,
+t_line *line,
+t_image *texture)
+{
+	int	scale;
+
+	scale = line->y * texture->line_length
+		- (WIN_HEIGHT * root->game->player->cam_height) * texture->line_length
+		/ 2 + ray->line_height * texture->line_length / 2;
+	line->tex_y = ((scale * texture->height) / ray->line_height)
+		/ texture->line_length;
+	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
+		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
+		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)];
+	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
+		* (root->mlx_img->bits_per_pixel / 8) + 1] = texture->data[line->tex_y
+		* texture->line_length + line->tex_x
+		* (texture->bits_per_pixel / 8) + 1];
+	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
+		* (root->mlx_img->bits_per_pixel / 8) + 2] = texture->data[line->tex_y
+		* texture->line_length + line->tex_x
+		* (texture->bits_per_pixel / 8) + 2];
+}
+```
+
+For the walls and floors, we will just need a more simpler version of texture_on_img, since we are just  
+
 To actually get the textures and print them on a display, we need to execute a few steps:
 1. Set the current line->y to the smaller of line->y0 and line->y1
 2. Set line_max (a new var) to the bigger of line->y0 and line->y1
-3. Loop through line-> to line->max
-	- Put the te
+3. Loop through line->y to y_max
+	- call texture_on_img with current line.
