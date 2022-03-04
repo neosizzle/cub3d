@@ -284,7 +284,7 @@ typedef  struct  s_line
 Then, you will need to create a variable that stores the position of the x-axis you hit on that wall.
 
 For instance, if we represent the texture below as a 2d grid, you can see the x points like so:
-![texture_grid](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/texture_grid)
+![texture_grid](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/texture_grid.png)
 (the x points are in blue, y in indigo)
 (very bad scaled, imagine 1 grid unit is 1 pixel of the texture)
 
@@ -370,44 +370,44 @@ t_image *texture);
 We can change the image data by doing these calculations :
 1.  Calculate the scale from the screen to the texture
     ```c
-        //this value will determine how big one certain pixel
-        // is translated to the screen
-        scale = line->y - (WIN_HEIGHT) / 2 + ray->line_height ;
-        
-        //since data is stored in a 1d array, we need to use the
-        //line_length property to get the actual offset. The formula becomes
-        scale = line->y * texture->line_length
-		- (WIN_HEIGHT * root->game->player->cam_height) * texture->line_length
-		/ 2 + ray->line_height * texture->line_length / 2;
+	//this value will determine how big one certain pixel
+	// is translated to the screen
+	scale = line->y - (WIN_HEIGHT) / 2 + ray->line_height ;
+	
+	//since data is stored in a 1d array, we need to use the
+	//line_length property to get the actual offset. The formula becomes
+	scale = line->y * texture->line_length
+	- (WIN_HEIGHT * root->game->player->cam_height) * texture->line_length
+	/ 2 + ray->line_height * texture->line_length / 2;
     ```
 2. Calculate the textures y coord to be printed with the scale
     ```c
-        //remember, we are printing one pixel in a straight line from top to bottom.
-        //this will give is the y point of the texture to print.
-        line->tex_y = ((scale * texture->height) / ray->line_height);
-        
-        //we will need to adjust with line length so the formula becomes
-        line->tex_y = ((scale * texture->height) / ray->line_height)
-		/ texture->line_length;
+	//remember, we are printing one pixel in a straight line from top to bottom.
+	//this will give is the y point of the texture to print.
+	line->tex_y = ((scale * texture->height) / ray->line_height);
+	
+	//we will need to adjust with line length so the formula becomes
+	line->tex_y = ((scale * texture->height) / ray->line_height)
+	/ texture->line_length;
     ```
 3. Set main image data to the textures image data based on line->x and tex_y obtained
     ```c
-        // we can just simply modify the root image data
-        //itself with the values we obtained above
-        //line->y - the y point of the current vertical line
-        //line->x - the x point of the current vertical line
-        //line->tex_y - the y point of the texture
-        //line->tex_x - the x point of the texture
-        //texture->bitsperpixel - bpp/8 = r, (bpp/8) + 1 = g, (bpp/8) + 2 = b,
-        //              Very wack need to refer to minilibx docs
-        root->mlx_img->data[line->y + line->x
-		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
-		+ line->tex_x * (texture->bits_per_pixel / 8)];
-		
-		//and to adjust for line size
-		root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
-		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
-		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)];
+	// we can just simply modify the root image data
+	//itself with the values we obtained above
+	//line->y - the y point of the current vertical line
+	//line->x - the x point of the current vertical line
+	//line->tex_y - the y point of the texture
+	//line->tex_x - the x point of the texture
+	//texture->bitsperpixel - bpp/8 = r, (bpp/8) + 1 = g, (bpp/8) + 2 = b,
+	//              Very wack need to refer to minilibx docs
+	root->mlx_img->data[line->y + line->x
+	* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
+	+ line->tex_x * (texture->bits_per_pixel / 8)];
+	
+	//and to adjust for line size
+	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
+	* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
+	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)];
     ```
 To put it all together, our texture_on_img will look something like this :
 ```c
