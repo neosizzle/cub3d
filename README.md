@@ -243,16 +243,16 @@ Now the actual DDA starts. It's a loop that increments the ray with 1 square eve
 After the DDA is done, we have to calculate the distance of the ray to the wall, so that we can calculate how high the wall has to be drawn after this.
 Now, the obvious points we use to calculate the dispance would be using the players position and the walls position (displayed below)
 
-![rc_implement](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![fish_eye_0](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/fish_eye_0.png)
 
 But this would result in the fish-eye effect that might not what you want it to be.
 
-![rc_implement](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![fish_eye_1](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/fish_eye_1.png)
 
 This can be fixed by using a camera place, by that we calculate the distance NOT from the player to the wall but from the plane to the wall so that the fish eye effect can
 be eliminated.
 
-![rc_implement](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![fish_eye_2](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/fish_eye_2.png)
 
 Depending on whether the ray hit an X side or Y side, the formula is computed using sideDistX, or sideDistY.
 Prepwalldist is the distance between the wall and the cam vector.
