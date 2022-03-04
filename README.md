@@ -1,6 +1,6 @@
 # cub3d
 
-This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/raycasting.html), If you cant understand the one provided, this guide is for you.
+This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/raycasting.html), If you are still stuck, feel free to refer this guide.
 
 -  [Introduction](#introduction)
 -  [Map parsing and validating](#map-parsing-and-validating)
