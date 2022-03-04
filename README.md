@@ -108,7 +108,7 @@ First, we declare some required variables for player position and direction as
 well as FOV.
 ```
 
-int main(int /*argc*/, char */*argv*/[])
+int main(int argc, char *argv[])
 {
   double posX = 22, posY = 12;  //x and y start position
   double dirX = -1, dirY = 0; //initial direction vector
