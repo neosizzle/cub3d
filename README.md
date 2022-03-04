@@ -494,9 +494,10 @@ void	paint_line(t_root *root, t_line *line, int rgb) // or paint_texture_line
 
 ## Player movement and rotation
 To rotate a vactor, simple multiply it with the rotation matrix
+```
 [ cos(a) -sin(a) ]
 [ sin(a)  cos(a) ]
-
+```
 (where a is the magnitude of rotation)
 Since our actual direction cosists of 2 vectors (x and y), when we rotate, we need to plug the formula above to both of those vectors, in both planes (player and camera).
 
