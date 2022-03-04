@@ -9,7 +9,7 @@ This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/rayca
 -  [Ray Casting implementation](#ray-casting-implementation)
 -  [Camera plane vector](#camera-plane-vector)
 -  [Image scaling and transformation for MLX](#image-scaling-and-transformation-for-MLX)
--  [Floor and ceiling colors](#floor-and-ceiling-colors)
+-  [Player movement and rotation](#player-movement-and-rotation)
 
 Updated as of Jan 2022.
 
@@ -284,7 +284,10 @@ typedef  struct  s_line
 Then, you will need to create a variable that stores the position of the x-axis you hit on that wall.
 
 For instance, if we represent the texture below as a 2d grid, you can see the x points like so:
-![textures_x](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![texture_grid](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/texture_grid)
+(the x points are in blue, y in indigo)
+(very bad scaled, imagine 1 grid unit is 1 pixel of the texture)
+
 you will also need to account for the players direction because the x points will be mirrored if you player turns around.
 
 We call this value wall_x, and we can calculate it like so:
@@ -435,10 +438,88 @@ t_image *texture)
 }
 ```
 
-For the walls and floors, we will just need a more simpler version of texture_on_img, since we are just  
+For the walls and floors, we will just need a more simpler version of texture_on_img, since we are just printing solid colors instead of textures.
+It can be implemented like so. [(Check out on how minilibx deal with colors)](https://harm-smits.github.io/42docs/libs/minilibx/colors.html)
+```c
+pixel_on_img(int rgb, int x, int y, t_image *img)
+{
+	int	r;
+	int	g;
+	int	b;
 
-To actually get the textures and print them on a display, we need to execute a few steps:
+	r = (rgb >> 16) & 0xFF;
+	g = (rgb >> 8) & 0xFF;
+	b = rgb & 0xFF;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8] = b;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 1] = g;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 2] = r;
+}
+```
+
+Now to utilize the functions we created above, we can create our `paint_line`  and `paint_texture_line` function with this steps :
 1. Set the current line->y to the smaller of line->y0 and line->y1
 2. Set line_max (a new var) to the bigger of line->y0 and line->y1
 3. Loop through line->y to y_max
-	- call texture_on_img with current line.
+	- call texture_on_img or pixel_on_img with current line.
+	- increment line->y
+```c
+void	paint_line(t_root *root, t_line *line, int rgb) // or paint_texture_line
+{
+	int	y;
+	int	y_max;
+
+	if (line->y0 < line->y1)
+	{
+		y = line->y0;
+		y_max = line->y1;
+	}
+	else
+	{
+		y = line->y1;
+		y_max = line->y0;
+	}
+	if (y >= 0)
+	{
+		while (y < y_max)
+		{
+			pixel_on_img(rgb, line->x, y, root->mlx_img);
+			// or texture_on_img
+			y++;
+		}
+	}
+}
+```
+
+## Player movement and rotation
+To rotate a vactor, simple multiply it with the rotation matrix
+[ cos(a) -sin(a) ]
+[ sin(a)  cos(a) ]
+
+(where a is the magnitude of rotation)
+Since our actual direction cosists of 2 vectors (x and y), when we rotate, we need to plug the formula above to both of those vectors, in both planes (player and camera).
+
+To move a player, we have to first check the map if the direction that we are about to move into is a wall. If not, move player according to player speed. We do the same for both x and y vectors.
+
+```c
+	t_player	*player;
+	t_game		*game;
+
+	game = root->game;
+	player = root->game->player;
+	
+	//checks for x vector
+	if (game->map
+		[(int)(player->pos.y)]
+		[(int)(player->pos.x + player->dir_vect.x * ceil(player->speed))]
+		!= '1')
+		//moves player in x vector direction
+		player->pos.x += (player->speed * player->dir_vect.x);
+	//checks for y vector
+	if (game->map
+		[(int)(player->pos.y + player->dir_vect.y * ceil(player->speed))]
+		[(int)(player->pos.x)] != '1')
+	    //moves player in y vector direction
+		player->pos.y += (player->speed * player->dir_vect.y);
+```
+
+Good luck in the project!
