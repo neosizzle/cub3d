@@ -493,7 +493,7 @@ void	paint_line(t_root *root, t_line *line, int rgb) // or paint_texture_line
 ```
 
 ## Player movement and rotation
-To rotate a vactor, simple multiply it with the rotation matrix
+To rotate a vactor, simply multiply it with the rotation matrix
 ```
 [ cos(a) -sin(a) ]
 [ sin(a)  cos(a) ]
