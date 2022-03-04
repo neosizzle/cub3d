@@ -285,7 +285,9 @@ Then, you will need to create a variable that stores the position of the x-axis 
 
 For instance, if we represent the texture below as a 2d grid, you can see the x points like so:
 ![texture_grid](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/texture_grid.png)
+
 (the x points are in blue, y in indigo)
+
 (very bad scaled, imagine 1 grid unit is 1 pixel of the texture)
 
 you will also need to account for the players direction because the x points will be mirrored if you player turns around.
