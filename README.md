@@ -238,7 +238,7 @@ Now the actual DDA starts. It's a loop that increments the ray with 1 square eve
       } 
 ```
 
-##Camera plane vector
+## Camera plane vector
 
 After the DDA is done, we have to calculate the distance of the ray to the wall, so that we can calculate how high the wall has to be drawn after this.
 Now, the obvious points we use to calculate the dispance would be using the players position and the walls position (displayed below)
