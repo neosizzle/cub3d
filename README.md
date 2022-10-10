@@ -2,7 +2,7 @@
 
 ![demo](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/cub3d.gif)
 
-This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/raycasting.html), If you cant understand the one provided, this guide is for you.
+This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/raycasting.html), If you are still stuck, feel free to refer this guide.
 
 -  [Introduction](#introduction)
 -  [Map parsing and validating](#map-parsing-and-validating)
@@ -11,7 +11,7 @@ This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/rayca
 -  [Ray Casting implementation](#ray-casting-implementation)
 -  [Camera plane vector](#camera-plane-vector)
 -  [Image scaling and transformation for MLX](#image-scaling-and-transformation-for-MLX)
--  [Floor and ceiling colors](#floor-and-ceiling-colors)
+-  [Player movement and rotation](#player-movement-and-rotation)
 
 Updated as of Jan 2022.
 
@@ -110,7 +110,7 @@ First, we declare some required variables for player position and direction as
 well as FOV.
 ```
 
-int main(int /*argc*/, char */*argv*/[])
+int main(int argc, char *argv[])
 {
   double posX = 22, posY = 12;  //x and y start position
   double dirX = -1, dirY = 0; //initial direction vector
@@ -240,21 +240,21 @@ Now the actual DDA starts. It's a loop that increments the ray with 1 square eve
       } 
 ```
 
-##Camera plane vector
+## Camera plane vector
 
 After the DDA is done, we have to calculate the distance of the ray to the wall, so that we can calculate how high the wall has to be drawn after this.
 Now, the obvious points we use to calculate the dispance would be using the players position and the walls position (displayed below)
 
-![rc_implement](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![fish_eye_0](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/fish_eye_0.png)
 
 But this would result in the fish-eye effect that might not what you want it to be.
 
-![rc_implement](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![fish_eye_1](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/fish_eye_1.png)
 
 This can be fixed by using a camera place, by that we calculate the distance NOT from the player to the wall but from the plane to the wall so that the fish eye effect can
 be eliminated.
 
-![rc_implement](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![fish_eye_2](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/fish_eye_2.png)
 
 Depending on whether the ray hit an X side or Y side, the formula is computed using sideDistX, or sideDistY.
 Prepwalldist is the distance between the wall and the cam vector.
@@ -286,7 +286,12 @@ typedef  struct  s_line
 Then, you will need to create a variable that stores the position of the x-axis you hit on that wall.
 
 For instance, if we represent the texture below as a 2d grid, you can see the x points like so:
-![textures_x](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/rc_implement.png)
+![texture_grid](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/texture_grid.png)
+
+(the x points are in blue, y in indigo)
+
+(very bad scaled, imagine 1 grid unit is 1 pixel of the texture)
+
 you will also need to account for the players direction because the x points will be mirrored if you player turns around.
 
 We call this value wall_x, and we can calculate it like so:
@@ -369,44 +374,44 @@ t_image *texture);
 We can change the image data by doing these calculations :
 1.  Calculate the scale from the screen to the texture
     ```c
-        //this value will determine how big one certain pixel
-        // is translated to the screen
-        scale = line->y - (WIN_HEIGHT) / 2 + ray->line_height ;
-        
-        //since data is stored in a 1d array, we need to use the
-        //line_length property to get the actual offset. The formula becomes
-        scale = line->y * texture->line_length
-		- (WIN_HEIGHT * root->game->player->cam_height) * texture->line_length
-		/ 2 + ray->line_height * texture->line_length / 2;
+	//this value will determine how big one certain pixel
+	// is translated to the screen
+	scale = line->y - (WIN_HEIGHT) / 2 + ray->line_height ;
+	
+	//since data is stored in a 1d array, we need to use the
+	//line_length property to get the actual offset. The formula becomes
+	scale = line->y * texture->line_length
+	- (WIN_HEIGHT * root->game->player->cam_height) * texture->line_length
+	/ 2 + ray->line_height * texture->line_length / 2;
     ```
 2. Calculate the textures y coord to be printed with the scale
     ```c
-        //remember, we are printing one pixel in a straight line from top to bottom.
-        //this will give is the y point of the texture to print.
-        line->tex_y = ((scale * texture->height) / ray->line_height);
-        
-        //we will need to adjust with line length so the formula becomes
-        line->tex_y = ((scale * texture->height) / ray->line_height)
-		/ texture->line_length;
+	//remember, we are printing one pixel in a straight line from top to bottom.
+	//this will give is the y point of the texture to print.
+	line->tex_y = ((scale * texture->height) / ray->line_height);
+	
+	//we will need to adjust with line length so the formula becomes
+	line->tex_y = ((scale * texture->height) / ray->line_height)
+	/ texture->line_length;
     ```
 3. Set main image data to the textures image data based on line->x and tex_y obtained
     ```c
-        // we can just simply modify the root image data
-        //itself with the values we obtained above
-        //line->y - the y point of the current vertical line
-        //line->x - the x point of the current vertical line
-        //line->tex_y - the y point of the texture
-        //line->tex_x - the x point of the texture
-        //texture->bitsperpixel - bpp/8 = r, (bpp/8) + 1 = g, (bpp/8) + 2 = b,
-        //              Very wack need to refer to minilibx docs
-        root->mlx_img->data[line->y + line->x
-		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
-		+ line->tex_x * (texture->bits_per_pixel / 8)];
-		
-		//and to adjust for line size
-		root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
-		* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
-		* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)];
+	// we can just simply modify the root image data
+	//itself with the values we obtained above
+	//line->y - the y point of the current vertical line
+	//line->x - the x point of the current vertical line
+	//line->tex_y - the y point of the texture
+	//line->tex_x - the x point of the texture
+	//texture->bitsperpixel - bpp/8 = r, (bpp/8) + 1 = g, (bpp/8) + 2 = b,
+	//              Very wack need to refer to minilibx docs
+	root->mlx_img->data[line->y + line->x
+	* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
+	+ line->tex_x * (texture->bits_per_pixel / 8)];
+	
+	//and to adjust for line size
+	root->mlx_img->data[line->y * root->mlx_img->line_length + line->x
+	* root->mlx_img->bits_per_pixel / 8] = texture->data[line->tex_y
+	* texture->line_length + line->tex_x * (texture->bits_per_pixel / 8)];
     ```
 To put it all together, our texture_on_img will look something like this :
 ```c
@@ -437,10 +442,89 @@ t_image *texture)
 }
 ```
 
-For the walls and floors, we will just need a more simpler version of texture_on_img, since we are just  
+For the walls and floors, we will just need a more simpler version of texture_on_img, since we are just printing solid colors instead of textures.
+It can be implemented like so. [(Check out on how minilibx deal with colors)](https://harm-smits.github.io/42docs/libs/minilibx/colors.html)
+```c
+pixel_on_img(int rgb, int x, int y, t_image *img)
+{
+	int	r;
+	int	g;
+	int	b;
 
-To actually get the textures and print them on a display, we need to execute a few steps:
+	r = (rgb >> 16) & 0xFF;
+	g = (rgb >> 8) & 0xFF;
+	b = rgb & 0xFF;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8] = b;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 1] = g;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 2] = r;
+}
+```
+
+Now to utilize the functions we created above, we can create our `paint_line`  and `paint_texture_line` function with this steps :
 1. Set the current line->y to the smaller of line->y0 and line->y1
 2. Set line_max (a new var) to the bigger of line->y0 and line->y1
 3. Loop through line->y to y_max
-	- call texture_on_img with current line.
+	- call texture_on_img or pixel_on_img with current line.
+	- increment line->y
+```c
+void	paint_line(t_root *root, t_line *line, int rgb) // or paint_texture_line
+{
+	int	y;
+	int	y_max;
+
+	if (line->y0 < line->y1)
+	{
+		y = line->y0;
+		y_max = line->y1;
+	}
+	else
+	{
+		y = line->y1;
+		y_max = line->y0;
+	}
+	if (y >= 0)
+	{
+		while (y < y_max)
+		{
+			pixel_on_img(rgb, line->x, y, root->mlx_img);
+			// or texture_on_img
+			y++;
+		}
+	}
+}
+```
+
+## Player movement and rotation
+To rotate a vactor, simply multiply it with the rotation matrix
+```
+[ cos(a) -sin(a) ]
+[ sin(a)  cos(a) ]
+```
+(where a is the magnitude of rotation)
+Since our actual direction cosists of 2 vectors (x and y), when we rotate, we need to plug the formula above to both of those vectors, in both planes (player and camera).
+
+To move a player, we have to first check the map if the direction that we are about to move into is a wall. If not, move player according to player speed. We do the same for both x and y vectors.
+
+```c
+	t_player	*player;
+	t_game		*game;
+
+	game = root->game;
+	player = root->game->player;
+	
+	//checks for x vector
+	if (game->map
+		[(int)(player->pos.y)]
+		[(int)(player->pos.x + player->dir_vect.x * ceil(player->speed))]
+		!= '1')
+		//moves player in x vector direction
+		player->pos.x += (player->speed * player->dir_vect.x);
+	//checks for y vector
+	if (game->map
+		[(int)(player->pos.y + player->dir_vect.y * ceil(player->speed))]
+		[(int)(player->pos.x)] != '1')
+	    //moves player in y vector direction
+		player->pos.y += (player->speed * player->dir_vect.y);
+```
+
+Good luck in the project!
