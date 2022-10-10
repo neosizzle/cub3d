@@ -1,5 +1,7 @@
 # cub3d
 
+![demo](https://raw.githubusercontent.com/neosizzle/cub3d/main/pictures/cub3d.gif)
+
 This guide is heavily abstracted from [This one](https://lodev.org/cgtutor/raycasting.html), If you cant understand the one provided, this guide is for you.
 
 -  [Introduction](#introduction)
